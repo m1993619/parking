@@ -2,8 +2,21 @@
 <resources>
 
     <string name="app_name">智能停车收费</string>
-    <string name="action_settings">Settings</string>
+    <string name="logout">注销</string>
+    <string name="exit">退出</string>
+    <string name="user_infomation">用户资料</string>
     <string name="hello_world">Hello world!</string>
-	<string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    <string name="username">用户名</string>
+    <string name="password">密    码</string>
+    <string name="title_user_info">用户个人信息</string>
+
+    <string-array name="items_array">
+        <item>item1</item>
+        <item>item2</item>
+        <item>item3</item>
+        <item>item4</item>
+    </string-array>
+
 </resources>

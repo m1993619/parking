@@ -1,5 +1,7 @@
 package com.graduation.parking;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -13,9 +15,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ShareActionProvider;
 
 public class MainActivity extends FragmentActivity
 {
+	private SharedPreferences sp;
+	private SharedPreferences.Editor editor;
+	
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
@@ -30,6 +36,12 @@ public class MainActivity extends FragmentActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		//获取登陆用户信息
+		sp = getSharedPreferences("user", MODE_PRIVATE);
+		editor = sp.edit();
+//		System.out.println(sp.getString("f_name", ""));
+		
+		
 		mTitle = mDrawerTitle = getTitle();
 		mPlanetTitles = getResources().getStringArray(R.array.items_array);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -39,8 +51,7 @@ public class MainActivity extends FragmentActivity
 		// drawer opens
 		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 		// set up the drawer's list view with items and click listener
-		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item,
-				mPlanetTitles));
+		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mPlanetTitles));
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
 		// enable ActionBar app icon to behave as action to toggle nav
@@ -55,20 +66,19 @@ public class MainActivity extends FragmentActivity
 		R.drawable.ic_drawer, /* nav drawer image to replace 'Up' caret */
 		R.string.drawer_open, /* "open drawer" description for accessibility */
 		R.string.drawer_close /* "close drawer" description for accessibility */
-		)
-		{
+		) {
 			public void onDrawerClosed(View view)
 			{
 				getActionBar().setTitle(mTitle);
 				invalidateOptionsMenu(); // creates call to
-									// onPrepareOptionsMenu()
+							// onPrepareOptionsMenu()
 			}
 
 			public void onDrawerOpened(View drawerView)
 			{
 				getActionBar().setTitle(mDrawerTitle);
 				invalidateOptionsMenu(); // creates call to
-									// onPrepareOptionsMenu()
+							// onPrepareOptionsMenu()
 			}
 		};
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
@@ -106,6 +116,15 @@ public class MainActivity extends FragmentActivity
 		// Handle action buttons
 		switch (item.getItemId())
 		{
+		case R.id.logout:
+			editor.clear();
+			editor.commit();
+			startActivity(new Intent(MainActivity.this,LoginActivity.class));
+			finish();
+		case R.id.exit:
+			finish();
+		case R.id.user_infomation:
+			startActivity(new Intent(MainActivity.this,UserInfoActivity.class));
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -122,14 +141,14 @@ public class MainActivity extends FragmentActivity
 
 	private void selectItem(int position)
 	{
-		switch(position)
+		switch (position)
 		{
 		case 0:
-		ParkingListFragment fragment = new ParkingListFragment();
-		getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
-		
+			ParkingListFragment fragment = new ParkingListFragment();
+			getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, fragment)
+					.commit();
+
 		}
-		System.out.println("��ʾfragment");
 		mDrawerList.setItemChecked(position, true);
 		setTitle(mPlanetTitles[position]);
 		mDrawerLayout.closeDrawer(mDrawerList);
@@ -143,8 +162,8 @@ public class MainActivity extends FragmentActivity
 	}
 
 	/**
-	 * When using the ActionBarDrawerToggle, you must call it during
-	 * onPostCreate() and onConfigurationChanged()...
+	 * When using the ActionBarDrawerToggle, you must call it during onPostCreate() and
+	 * onConfigurationChanged()...
 	 */
 
 	@Override

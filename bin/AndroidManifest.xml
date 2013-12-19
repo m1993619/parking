@@ -36,6 +36,13 @@
             android:name="com.graduation.parking.ParkingRegisterActivity"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name="com.graduation.parking.LoginActivity"
+            android:label="@string/title_activity_login"
+            android:windowSoftInputMode="adjustResize|stateVisible" >
+        </activity>
+        <activity android:name="com.graduation.parking.UserInfoActivity"
+            android:label="@string/title_user_info"></activity>
     </application>
 
 </manifest>
