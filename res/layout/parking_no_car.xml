@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" 
+ >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="75dp"
+            android:layout_weight="1"
+            android:src="@drawable/no_parking" />
+
+        <TextView
+            android:id="@+id/f_name"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:gravity="center_vertical" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:gravity="center_vertical"
+            android:text="空闲" />
+
+        <ImageView
+            android:id="@+id/parking_setting"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/icon1" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/item_space_gone"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/f_id"
+            style="@style/item_space_gone" />
+
+        <TextView
+            android:id="@+id/f_code"
+            style="@style/item_space_gone" />	
+
+        <TextView
+            android:id="@+id/f_street_id"
+            style="@style/item_space_gone" />
+
+        <TextView
+            android:id="@+id/f_type"
+            style="@style/item_space_gone" />
+
+        <TextView
+            android:id="@+id/f_state"
+            style="@style/item_space_gone" />
+
+        <TextView
+            android:id="@+id/f_is_free"
+            style="@style/item_space_gone" />
+    </LinearLayout>
+
+</RelativeLayout>
