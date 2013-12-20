@@ -14,6 +14,7 @@ public class UserInfoActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.user_info);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		System.out.println("UserInfoActivity create");
 
 	}
 
@@ -38,6 +39,13 @@ public class UserInfoActivity extends Activity
 		}
 	}
 	
+	@Override
+	protected void onDestroy()
+	{
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		System.out.println("UserInfoActivity destroyed");
+	}
 	
 	public boolean onNavigateUp()
 	{

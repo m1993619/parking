@@ -1,4 +1,4 @@
-package com.graduation.parking;
+package com.graduation.fragment.parking;
 
 import java.util.ArrayList;
 
@@ -10,6 +10,9 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.graduation.db.DbUtil;
+import com.graduation.parking.R;
+import com.graduation.parking.R.id;
+import com.graduation.parking.R.layout;
 import com.gratuation.model.Parking;
 
 public class ParkingPayActivity extends Activity

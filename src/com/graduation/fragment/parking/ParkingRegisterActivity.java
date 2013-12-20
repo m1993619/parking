@@ -1,4 +1,8 @@
-package com.graduation.parking;
+package com.graduation.fragment.parking;
+
+import com.graduation.parking.R;
+import com.graduation.parking.R.id;
+import com.graduation.parking.R.layout;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -11,9 +15,9 @@ public class ParkingRegisterActivity extends Activity
 	private Spinner province;
 	private Spinner city;
 	private EditText license;
-	private final String[] PROVINCE = new String[] { "¾©", "½ò", "¼½", "½ú", "ÃÉ", "ÁÉ", "¼ª", "ºÚ", "»¦",
-			"ËÕ", "Õã", "Íî", "Ãö", "¸Ó", "Â³", "Ô¥", "¶õ", "Ïæ", "ÔÁ", "¹ð", "Çí", "Óå", "´¨", "¹ó", "ÔÆ",
-			"²Ø", "ÉÂ", "¸Ê", "Çà", "Äþ", "ÐÂ", "¸Û", "°Ä", "Ì¨" };
+	private final String[] PROVINCE = new String[] { "ï¿½ï¿½", "ï¿½ï¿½", "ï¿½ï¿½", "ï¿½ï¿½", "ï¿½ï¿½", "ï¿½ï¿½", "ï¿½ï¿½", "ï¿½ï¿½", "ï¿½ï¿½",
+			"ï¿½ï¿½", "ï¿½ï¿½", "ï¿½ï¿½", "ï¿½ï¿½", "ï¿½ï¿½", "Â³", "Ô¥", "ï¿½ï¿½", "ï¿½ï¿½", "ï¿½ï¿½", "ï¿½ï¿½", "ï¿½ï¿½", "ï¿½ï¿½", "ï¿½ï¿½", "ï¿½ï¿½", "ï¿½ï¿½",
+			"ï¿½ï¿½", "ï¿½ï¿½", "ï¿½ï¿½", "ï¿½ï¿½", "ï¿½ï¿½", "ï¿½ï¿½", "ï¿½ï¿½", "ï¿½ï¿½", "Ì¨" };
 	private final String[] CITY = new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I",
 			"J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y",
 			"Z" };

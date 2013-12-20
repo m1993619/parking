@@ -29,11 +29,11 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="com.graduation.parking.ParkingPayActivity"
+            android:name="com.graduation.fragment.parking.ParkingPayActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="com.graduation.parking.ParkingRegisterActivity"
+            android:name="com.graduation.fragment.parking.ParkingRegisterActivity"
             android:label="@string/app_name" >
         </activity>
         <activity

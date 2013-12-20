@@ -1,5 +1,7 @@
 package com.graduation.parking;
 
+import com.graduation.fragment.parking.ParkingListFragment;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -121,13 +123,17 @@ public class MainActivity extends FragmentActivity
 			editor.commit();
 			startActivity(new Intent(MainActivity.this,LoginActivity.class));
 			finish();
+			break;
 		case R.id.exit:
 			finish();
+			break;
 		case R.id.user_infomation:
 			startActivity(new Intent(MainActivity.this,UserInfoActivity.class));
+			break;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	private class DrawerItemClickListener implements ListView.OnItemClickListener
