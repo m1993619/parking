@@ -2,6 +2,7 @@ package com.graduation.fragment.parking;
 
 import java.util.ArrayList;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,10 +10,8 @@ import android.os.Message;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.graduation.db.DbUtil;
 import com.graduation.parking.R;
-import com.graduation.parking.R.id;
-import com.graduation.parking.R.layout;
+import com.graduation.util.DbUtil;
 import com.gratuation.model.Parking;
 
 public class ParkingPayActivity extends Activity
@@ -32,6 +31,7 @@ public class ParkingPayActivity extends Activity
 
 	}
 
+	@SuppressLint("HandlerLeak")
 	Handler handler = new Handler() {
 		@Override
 		public void handleMessage(Message msg)

@@ -2,6 +2,7 @@ package com.graduation.parking;
 
 import com.graduation.fragment.parking.ParkingListFragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -17,7 +18,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.ShareActionProvider;
 
 public class MainActivity extends FragmentActivity
 {
@@ -32,6 +32,7 @@ public class MainActivity extends FragmentActivity
 	private CharSequence mTitle;
 	private String[] mPlanetTitles;
 
+	@SuppressLint("CommitPrefEdits")
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{

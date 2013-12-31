@@ -11,7 +11,30 @@ public class User
 	private int f_region_id; // 所属区域
 	private int f_shift_id; // 所在班组ID
 	private int f_street_id; // 所属路段
+	public String getF_shift_name()
+	{
+		return f_shift_name;
+	}
 
+	public void setF_shift_name(String f_shift_name)
+	{
+		this.f_shift_name = f_shift_name;
+	}
+
+	public String getF_street_name()
+	{
+		return f_street_name;
+	}
+
+	public void setF_street_name(String f_street_name)
+	{
+		this.f_street_name = f_street_name;
+	}
+
+	private String f_shift_name;
+	private String f_street_name;
+	
+	
 	public int getF_id()
 	{
 		return f_id;

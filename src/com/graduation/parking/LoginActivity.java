@@ -17,7 +17,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.graduation.db.DbUtil;
+import com.graduation.util.DbUtil;
 import com.gratuation.model.User;
 
 /**
@@ -215,6 +215,8 @@ public class LoginActivity extends Activity
 				editor.putString("f_type", user.getF_type());
 				editor.putInt("f_shift_id", user.getF_shift_id());
 				editor.putInt("f_street_id", user.getF_street_id());
+				editor.putString("f_shift_name", user.getF_shift_name());
+				editor.putString("f_street_name", user.getF_street_name());
 				editor.commit();
 				return true;
 			}

@@ -49,7 +49,7 @@ public class ParkingListAdapter extends BaseAdapter
 	public View getView(int position, View convertView, ViewGroup parent)
 	{
 		inflater = LayoutInflater.from(context);
-		HashMap map = list.get(position);
+		HashMap<String,Object> map = list.get(position);
 		int state = (Integer) map.get("f_state");
 		View view = null;
 

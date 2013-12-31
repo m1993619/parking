@@ -16,9 +16,7 @@
 
             <EditText
                 android:id="@+id/f_name"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="3" />
+                style="@style/user_info_edit" />
         </LinearLayout>
 
         <LinearLayout style="@style/user_info" >
@@ -29,9 +27,7 @@
 
             <EditText
                 android:id="@+id/f_account"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="3" />
+                style="@style/user_info_edit" />
         </LinearLayout>
 
         <LinearLayout style="@style/user_info" >
@@ -42,11 +38,17 @@
 
             <EditText
                 android:id="@+id/f_password"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
+                style="@style/user_info_edit"
                 android:inputType="textPassword" />
         </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone" />
 
         <LinearLayout style="@style/user_info" >
 
@@ -56,10 +58,8 @@
 
             <EditText
                 android:id="@+id/f_phone"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="3" 
-                android:inputType="phone"/>
+                style="@style/user_info_edit"
+                android:inputType="phone" />
         </LinearLayout>
 
         <LinearLayout style="@style/user_info" >
@@ -70,9 +70,7 @@
 
             <EditText
                 android:id="@+id/f_type"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="3" />
+                style="@style/user_info_edit" />
         </LinearLayout>
 
         <LinearLayout style="@style/user_info" >
@@ -83,9 +81,7 @@
 
             <EditText
                 android:id="@+id/f_shift_name"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="3" />
+                style="@style/user_info_edit" />
         </LinearLayout>
 
         <LinearLayout style="@style/user_info" >
@@ -96,18 +92,22 @@
 
             <EditText
                 android:id="@+id/f_street_name"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="3" />
+                style="@style/user_info_edit" />
         </LinearLayout>
 
-        <LinearLayout style="@style/user_info" >
+        <LinearLayout
+            style="@style/user_info"
+            android:layout_gravity="bottom" >
 
             <Button
                 android:id="@+id/up_user_info"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="update" />
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginTop="20dp"
+                android:text="update"
+                android:visibility="gone" />
         </LinearLayout>
     </LinearLayout>
 

@@ -1,4 +1,4 @@
-package com.graduation.db;
+package com.graduation.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,7 +15,7 @@ import com.gratuation.model.User;
 
 public class DbUtil
 {
-	private static String URL = "jdbc:postgresql://192.168.1.119:5432/parking";
+	private static String URL = "jdbc:postgresql://192.168.1.101:5432/parking";
 	private static String DB_USERNAME = "parking";
 	private static String DB_PASSWORD = "parking";
 
@@ -39,7 +39,6 @@ public class DbUtil
 				parking.setF_key(rs.getString("f_key"));
 				parking.setF_name(rs.getString("f_name"));
 
-
 				parking.setF_state(rs.getInt("f_state"));
 
 				list.add(parking);
@@ -57,7 +56,7 @@ public class DbUtil
 
 	public static User login(String username, String password)
 	{
-		String sql = "select * from t_user where f_account = ? and f_password = ?";
+		String sql = "select u.*,sh.f_name as f_shift_name,st.f_name as f_street_name from t_user u left join t_shift sh on u.f_shift_id = sh.f_id left join t_street st on u.f_street_id = st.f_id  where u.f_account = ? and u.f_password = ?";
 		PreparedStatement pSta = getPStatement(sql);
 		User user = null;
 
@@ -76,9 +75,12 @@ public class DbUtil
 				user.setF_password(rs.getString("f_password"));
 				user.setF_phone(rs.getString("f_phone"));
 				user.setF_type(rs.getString("f_type"));
-				user.setF_region_id(rs.getInt("f_region_id"));
 				user.setF_shift_id(rs.getInt("f_shift_id"));
 				user.setF_street_id(rs.getInt("f_street_id"));
+				user.setF_shift_name(rs.getString("f_shift_name"));
+				user.setF_street_name(rs.getString("f_street_name"));
+				System.out.println(rs.getString("f_shift_name"));
+				System.out.println(rs.getString("f_street_name"));
 			}
 		}
 		catch (SQLException e)
@@ -89,6 +91,29 @@ public class DbUtil
 
 		return user;
 
+	}
+
+	public static int updateUser(int id, String password, String phone)
+	{
+		int i = 0;
+		String sql = "update t_user set f_password = ?,f_phone = ? where f_id = ? ";
+
+		PreparedStatement pSta = getPStatement(sql);
+
+		try
+		{
+			pSta.setString(1, password);
+			pSta.setString(2, phone);
+			pSta.setInt(3, id);
+
+			i = pSta.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+
+		return i;
 	}
 
 	public static ArrayList<User> getUser()
@@ -111,7 +136,8 @@ public class DbUtil
 				user.setF_region_id(rs.getInt("f_region_id"));
 				user.setF_shift_id(rs.getInt("f_shift_id"));
 				user.setF_street_id(rs.getInt("f_street_id"));
-
+				user.setF_shift_name(rs.getString("f_shift_name"));
+				user.setF_street_name(rs.getString("f_street_name"));
 				list.add(user);
 			}
 		}
@@ -126,7 +152,7 @@ public class DbUtil
 
 	public static List<HashMap<String, Object>> getParkingList(int id)
 	{
-		List<HashMap<String, Object>> list = new ArrayList<HashMap<String,Object>>();
+		List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 		String sql = "	select p.f_id,p.f_code,p.f_name,p.f_street_id,p.f_type,p.f_state,"
 				+ "p.f_is_free,p.f_key,rd.f_car_type,rd.f_parking_stamp,"
 				+ "rd.f_car_no,s.f_name as f_street_name from t_parking p "

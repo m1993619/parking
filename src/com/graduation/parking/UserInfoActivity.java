@@ -1,12 +1,37 @@
 package com.graduation.parking;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.graduation.util.DbUtil;
 
 public class UserInfoActivity extends Activity
 {
+
+	private SharedPreferences sp;
+	private SharedPreferences.Editor editor;
+
+	private EditText f_name;
+	private EditText f_account;
+	private EditText f_password;
+	private EditText f_phone;
+	private EditText f_type;
+	private EditText f_shift_name;
+	private EditText f_street_name;
+	private ProgressBar progress;
+	private Button button;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -14,7 +39,90 @@ public class UserInfoActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.user_info);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		System.out.println("UserInfoActivity create");
+
+		progress = (ProgressBar) findViewById(R.id.progress);
+		button = (Button) findViewById(R.id.up_user_info);
+
+		f_name = (EditText) findViewById(R.id.f_name);
+		f_account = (EditText) findViewById(R.id.f_account);
+		f_password = (EditText) findViewById(R.id.f_password);
+		f_phone = (EditText) findViewById(R.id.f_phone);
+		f_type = (EditText) findViewById(R.id.f_type);
+		f_shift_name = (EditText) findViewById(R.id.f_shift_name);
+		f_street_name = (EditText) findViewById(R.id.f_street_name);
+
+		sp = getSharedPreferences("user", MODE_PRIVATE);
+		editor = sp.edit();
+
+		showUserInfo();
+
+		button.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v)
+			{
+				progress.setVisibility(View.VISIBLE);
+				new UpdateTask().execute();
+			}
+		});
+	}
+
+	private void showUserInfo()
+	{
+		f_name.setText(sp.getString("f_name", ""));
+		f_account.setText(sp.getString("f_account", ""));
+		f_password.setText(sp.getString("f_password", ""));
+		f_phone.setText(sp.getString("f_phone", ""));
+		f_type.setText(sp.getString("f_type", ""));
+		f_shift_name.setText(sp.getString("f_shift_name", ""));
+		f_street_name.setText(sp.getString("f_street_name", ""));
+	}
+
+	private class UpdateTask extends AsyncTask<Void, Void, Boolean>
+	{
+
+		@Override
+		protected Boolean doInBackground(Void... params)
+		{
+
+			int id = sp.getInt("f_id", 0);
+			String password = f_password.getText().toString();
+			String phone = f_phone.getText().toString();
+
+			int status = DbUtil.updateUser(id, password, phone);
+
+			if (1 == status)
+			{
+				System.out.println(password + phone);
+				editor.putString("f_password", password);
+				editor.putString("f_phone", phone);
+				editor.commit();
+				return true;
+			}
+			else
+				return false;
+		}
+
+		@Override
+		protected void onPostExecute(Boolean result)
+		{
+			// TODO Auto-generated method stub
+			if (result)
+			{
+				System.out.println("success");
+				f_password.setEnabled(false);
+				f_phone.setEnabled(false);
+				button.setVisibility(View.GONE);
+				progress.setVisibility(View.GONE);
+				Toast.makeText(UserInfoActivity.this, "更新数据成功", Toast.LENGTH_SHORT).show();
+			}
+			else
+			{
+				System.out.println("fail");
+				progress.setVisibility(View.GONE);
+				Toast.makeText(UserInfoActivity.this, "更新数据失败，请重试！", Toast.LENGTH_SHORT).show();
+			}
+
+		}
 
 	}
 
@@ -33,20 +141,15 @@ public class UserInfoActivity extends Activity
 		switch (item.getItemId())
 		{
 		case R.id.user_info_edit:
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
+			f_password.setEnabled(true);
+			f_phone.setEnabled(true);
+			button.setVisibility(View.VISIBLE);
+			break;
+
 		}
+		return super.onOptionsItemSelected(item);
 	}
-	
-	@Override
-	protected void onDestroy()
-	{
-		// TODO Auto-generated method stub
-		super.onDestroy();
-		System.out.println("UserInfoActivity destroyed");
-	}
-	
+
 	public boolean onNavigateUp()
 	{
 		finish();
