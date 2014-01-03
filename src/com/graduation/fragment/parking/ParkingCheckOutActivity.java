@@ -14,7 +14,7 @@ import com.graduation.parking.R;
 import com.graduation.util.DbUtil;
 import com.gratuation.model.Parking;
 
-public class ParkingPayActivity extends Activity
+public class ParkingCheckOutActivity extends Activity
 {
 	private TextView textView;
 
@@ -22,7 +22,7 @@ public class ParkingPayActivity extends Activity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.parking_pay);
+		setContentView(R.layout.checkout);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		textView = (TextView) findViewById(R.id.text);

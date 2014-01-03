@@ -29,11 +29,11 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="com.graduation.fragment.parking.ParkingPayActivity"
+            android:name="com.graduation.fragment.parking.ParkingCheckOutActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="com.graduation.fragment.parking.ParkingRegisterActivity"
+            android:name="com.graduation.fragment.parking.ParkingCheckInActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
@@ -44,7 +44,7 @@
         <activity
             android:name="com.graduation.parking.UserInfoActivity"
             android:label="@string/title_user_info"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
         </activity>
     </application>
 

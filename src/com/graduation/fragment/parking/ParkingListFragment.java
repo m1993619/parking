@@ -135,9 +135,9 @@ public class ParkingListFragment extends Fragment
 		{
 
 			if (0 == (Integer) (list.get(arg2).get("f_state")))
-				startActivity(new Intent(getActivity(), ParkingRegisterActivity.class));
+				startActivity(new Intent(getActivity(), ParkingCheckInActivity.class));
 			else
-				startActivity(new Intent(getActivity(), ParkingPayActivity.class));
+				startActivity(new Intent(getActivity(), ParkingCheckOutActivity.class));
 
 			return true;
 

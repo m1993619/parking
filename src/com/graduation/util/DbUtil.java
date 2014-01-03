@@ -15,7 +15,7 @@ import com.gratuation.model.User;
 
 public class DbUtil
 {
-	private static String URL = "jdbc:postgresql://192.168.1.101:5432/parking";
+	private static String URL = "jdbc:postgresql://172.16.139.19:5432/parking";
 	private static String DB_USERNAME = "parking";
 	private static String DB_PASSWORD = "parking";
 

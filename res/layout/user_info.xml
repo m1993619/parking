@@ -42,13 +42,7 @@
                 android:inputType="textPassword" />
         </LinearLayout>
 
-        <ProgressBar
-            android:id="@+id/progress"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:visibility="gone" />
+
 
         <LinearLayout style="@style/user_info" >
 
@@ -67,6 +61,12 @@
             <TextView
                 style="@style/user_info_text"
                 android:text="用户类别 :" />
+
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
 
             <EditText
                 android:id="@+id/f_type"
