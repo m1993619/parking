@@ -17,6 +17,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
+
 import com.graduation.adapter.ParkingListAdapter;
 import com.graduation.parking.R;
 import com.graduation.util.DbUtil;
@@ -129,13 +131,26 @@ public class ParkingListFragment extends Fragment
 
 	private class MyListener implements OnItemLongClickListener
 	{
-
 		@Override
 		public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
 		{
+			String parking_code = (String) ((TextView) arg1.findViewById(R.id.f_code)).getText();
+			int street_id = Integer
+					.parseInt((String) ((TextView) arg1.findViewById(R.id.f_street_id))
+							.getText());
+			int f_id = Integer.parseInt((String) ((TextView) arg1.findViewById(R.id.f_id)).getText());
+			int f_state = Integer.parseInt((String) ((TextView) arg1.findViewById(R.id.f_state))
+					.getText());
+			System.out.println("this is ParkingCode:" + parking_code);
 
-			if (0 == (Integer) (list.get(arg2).get("f_state")))
-				startActivity(new Intent(getActivity(), ParkingCheckInActivity.class));
+			if (0 == f_state)
+			{
+				Intent intent = new Intent(getActivity(), ParkingCheckInActivity.class);
+				intent.putExtra("parking_code", parking_code);
+				intent.putExtra("f_street_id", street_id);
+				intent.putExtra("f_id", f_id);
+				startActivity(intent);
+			}
 			else
 				startActivity(new Intent(getActivity(), ParkingCheckOutActivity.class));
 

@@ -1,5 +1,8 @@
 package com.graduation.adapter;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -49,7 +52,7 @@ public class ParkingListAdapter extends BaseAdapter
 	public View getView(int position, View convertView, ViewGroup parent)
 	{
 		inflater = LayoutInflater.from(context);
-		HashMap<String,Object> map = list.get(position);
+		HashMap<String, Object> map = list.get(position);
 		int state = (Integer) map.get("f_state");
 		View view = null;
 
@@ -105,11 +108,13 @@ public class ParkingListAdapter extends BaseAdapter
 
 			((TextView) view.findViewById(R.id.f_car_type)).setText((String) list.get(position).get(
 					"f_car_type"));
-			((TextView) view.findViewById(R.id.f_parking_stamp)).setText((String) list.get(position)
-					.get("f_parking_stamp"));
+			((TextView) view.findViewById(R.id.f_parking_stamp)).setText("停车时间："
+					+ list.get(position).get("f_parking_stamp"));
 			((TextView) view.findViewById(R.id.f_car_no)).setText((String) list.get(position).get(
 					"f_car_no"));
 
+			((TextView) view.findViewById(R.id.act_cost)).setText("预收金额："
+					+ String.valueOf(list.get(position).get("f_act_cost")) + "元");
 		}
 
 		return view;

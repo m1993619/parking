@@ -39,7 +39,7 @@
                 style="@style/parking_has_car_text" />
 
             <TextView
-                android:id="@+id/pre_pay"
+                android:id="@+id/act_cost"
                 style="@style/parking_has_car_text" />
         </LinearLayout>
 

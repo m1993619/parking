@@ -23,7 +23,7 @@ public class MainActivity extends FragmentActivity
 {
 	private SharedPreferences sp;
 	private SharedPreferences.Editor editor;
-	
+
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
@@ -39,12 +39,11 @@ public class MainActivity extends FragmentActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		//获取登陆用户信息
+		// 获取登陆用户信息
 		sp = getSharedPreferences("user", MODE_PRIVATE);
 		editor = sp.edit();
-//		System.out.println(sp.getString("f_name", ""));
-		
-		
+		// System.out.println(sp.getString("f_name", ""));
+
 		mTitle = mDrawerTitle = getTitle();
 		mPlanetTitles = getResources().getStringArray(R.array.items_array);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -93,6 +92,20 @@ public class MainActivity extends FragmentActivity
 	}
 
 	@Override
+	protected void onResume()
+	{
+		// TODO Auto-generated method stub
+		super.onResume();
+		Intent intent = getIntent();
+		String state = intent.getStringExtra("state");
+		if ("checkin".equals(state))
+		{
+			selectItem(0);
+		}
+
+	}
+
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
 		MenuInflater inflater = getMenuInflater();
@@ -122,14 +135,14 @@ public class MainActivity extends FragmentActivity
 		case R.id.logout:
 			editor.clear();
 			editor.commit();
-			startActivity(new Intent(MainActivity.this,LoginActivity.class));
+			startActivity(new Intent(MainActivity.this, LoginActivity.class));
 			finish();
 			break;
 		case R.id.exit:
 			finish();
 			break;
 		case R.id.user_infomation:
-			startActivity(new Intent(MainActivity.this,UserInfoActivity.class));
+			startActivity(new Intent(MainActivity.this, UserInfoActivity.class));
 			break;
 		default:
 			return super.onOptionsItemSelected(item);

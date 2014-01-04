@@ -65,13 +65,7 @@ public class ParkingCheckOutActivity extends Activity
 			// e.printStackTrace();
 			// }
 			StringBuffer buffer = new StringBuffer();
-			ArrayList<Parking> list = DbUtil.getParking();
-			for (Parking parking : list)
-			{
-				String str = "name:" + parking.getF_name() + "   ;password:"
-						+ parking.getF_code() + "\n";
-				buffer.append(str);
-			}
+		
 
 			String strBuffer = new String(buffer);
 			Message msg = new Message();

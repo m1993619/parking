@@ -1,11 +1,13 @@
 package com.graduation.util;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,30 +21,35 @@ public class DbUtil
 	private static String DB_USERNAME = "parking";
 	private static String DB_PASSWORD = "parking";
 
-	public static ArrayList<Parking> getParking()
+	public static int checkin(ArrayList<Object> list)
 	{
-		String sql = "select * from t_parking";
-		ResultSet rs = getResult(sql);
-		ArrayList<Parking> list = new ArrayList<Parking>();
+		int i = 0;
+
+		String sql1 = "insert into t_parking_record (f_key,f_car_no,f_car_type,f_act_cost,f_creater_id,f_charger_id,f_car_state,f_parking_code,f_street_id,f_shift_id,f_parking_stamp) values (?,?,?,?,?,?,?,?,?,?,?)";
+		String sql2 = "update t_parking set f_state = 1,f_key = ? where f_id = ?";
+		PreparedStatement ps1 = getPStatement(sql1);
+
+		PreparedStatement ps2 = getPStatement(sql2);
 
 		try
 		{
-			while (rs.next())
-			{
-				Parking parking = new Parking();
-				parking.setF_id(rs.getInt("f_id"));
-				parking.setF_code(rs.getString("f_code"));
+			ps1.setString(1, (String) list.get(0));
+			ps1.setString(2, (String) list.get(1));
+			ps1.setString(3, (String) list.get(2));
+			ps1.setDouble(4, (Double) list.get(3));
+			ps1.setInt(5, (Integer) list.get(4));
+			ps1.setInt(6, (Integer) list.get(5));
+			ps1.setString(7, (String) list.get(6));
+			ps1.setString(8, (String) list.get(7));
+			ps1.setInt(9, (Integer) list.get(8));
+			ps1.setInt(10, (Integer) list.get(9));
+			ps1.setTimestamp(11, (Timestamp) list.get(10));
 
-				parking.setF_index(rs.getInt("f_index"));
-				parking.setF_is_free(rs.getInt("f_is_free"));
+			ps2.setString(1, (String) list.get(0));
+			ps2.setInt(2, (Integer) list.get(11));
 
-				parking.setF_key(rs.getString("f_key"));
-				parking.setF_name(rs.getString("f_name"));
-
-				parking.setF_state(rs.getInt("f_state"));
-
-				list.add(parking);
-			}
+			i = ps1.executeUpdate();
+			ps2.executeUpdate();
 		}
 		catch (SQLException e)
 		{
@@ -50,7 +57,7 @@ public class DbUtil
 			e.printStackTrace();
 		}
 
-		return list;
+		return i;
 
 	}
 
@@ -116,46 +123,12 @@ public class DbUtil
 		return i;
 	}
 
-	public static ArrayList<User> getUser()
-	{
-		String sql = "select * from t_user";
-		ResultSet rs = getResult(sql);
-		ArrayList<User> list = new ArrayList<User>();
-
-		try
-		{
-			while (rs.next())
-			{
-				User user = new User();
-				user.setF_id(rs.getInt("f_id"));
-				user.setF_name(rs.getString("f_name"));
-				user.setF_account(rs.getString("f_account"));
-				user.setF_password(rs.getString("f_password"));
-				user.setF_phone(rs.getString("f_phone"));
-				user.setF_type(rs.getString("f_type"));
-				user.setF_region_id(rs.getInt("f_region_id"));
-				user.setF_shift_id(rs.getInt("f_shift_id"));
-				user.setF_street_id(rs.getInt("f_street_id"));
-				user.setF_shift_name(rs.getString("f_shift_name"));
-				user.setF_street_name(rs.getString("f_street_name"));
-				list.add(user);
-			}
-		}
-		catch (SQLException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return list;
-	}
-
 	public static List<HashMap<String, Object>> getParkingList(int id)
 	{
 		List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 		String sql = "	select p.f_id,p.f_code,p.f_name,p.f_street_id,p.f_type,p.f_state,"
 				+ "p.f_is_free,p.f_key,rd.f_car_type,rd.f_parking_stamp,"
-				+ "rd.f_car_no,s.f_name as f_street_name from t_parking p "
+				+ "rd.f_car_no,s.f_name as f_street_name,rd.f_act_cost from t_parking p "
 				+ "left join t_parking_record rd on rd.f_key = p.f_key "
 				+ "left join t_street s on p.f_street_id = s.f_id "
 				+ "left join t_parking_image tpi on tpi.f_key = rd.f_key "
@@ -180,8 +153,9 @@ public class DbUtil
 				map.put("f_is_free", rs.getInt(7));
 				map.put("f_key", rs.getString(8));
 				map.put("f_car_type", rs.getString(9));
-				map.put("f_parking_stamp", rs.getString(10));
+				map.put("f_parking_stamp", rs.getTimestamp(10));
 				map.put("f_car_no", rs.getString(11));
+				map.put("f_act_cost", rs.getDouble(13));
 
 				list.add(map);
 			}
