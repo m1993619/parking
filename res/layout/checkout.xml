@@ -1,12 +1,188 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    android:layout_marginTop="24dp" >
 
-    <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:id="@+id/text"
-        />
+    <LinearLayout
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/login_status_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="sans-serif-light"
+            android:text="更新数据中..."
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/form"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <TextView
+            style="@style/check_row"
+            android:layout_marginBottom="16dp"
+            android:text="车辆停车收费"
+            android:textSize="20sp" />
+
+        <LinearLayout style="@style/check_row" >
+
+            <TextView
+                style="@style/check_text"
+                android:text="车位编号：" />
+
+            <TextView
+                android:id="@+id/parking_code"
+                style="@style/check_text" />
+
+            <TextView
+                style="@style/check_text"
+                android:text="车牌号码：" />
+
+            <TextView
+                android:id="@+id/car_no"
+                style="@style/check_text" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/check_row" >
+
+            <TextView
+                style="@style/check_text"
+                android:text="停车时间：" />
+
+            <TextView
+                android:id="@+id/parking_stamp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/check_row" >
+
+            <TextView
+                style="@style/check_text"
+                android:text="停车时长：" />
+
+            <TextView
+                android:id="@+id/time"
+                style="@style/check_text" />
+
+            <TextView
+                style="@style/check_text"
+                android:text="街道位置：" />
+
+            <TextView
+                android:id="@+id/street_name"
+                style="@style/check_text" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/check_row" >
+
+            <TextView
+                style="@style/check_text"
+                android:text="预付金额：" />
+
+            <TextView
+                android:id="@+id/pre_pay"
+                style="@style/check_text" />
+
+            <TextView
+                style="@style/check_text"
+                android:text="应收金额：" />
+
+            <TextView
+                android:id="@+id/cost"
+                style="@style/check_text" />
+        </LinearLayout>
+
+        <View style="@style/line" />
+
+        <TextView
+            style="@style/check_row"
+            android:layout_marginTop="8dp"
+            android:text="逃逸照片：" />
+
+        <LinearLayout
+            style="@style/check_row"
+            android:layout_marginBottom="16dp" >
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/plus" >
+            </ImageButton>
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/check_row" >
+
+            <TextView
+                style="@style/check_text"
+                android:text="收费类型：" />
+
+            <TextView
+                style="@style/check_text"
+                android:text="实收金额：" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/check_row" >
+
+            <Spinner
+                android:id="@+id/cost_type"
+                style="@style/check_text" />
+
+            <EditText
+                android:id="@+id/act_cost"
+                style="@style/check_text"
+                android:inputType="number" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/reason_view"
+            style="@style/check_row"
+            android:layout_marginTop="8dp"
+            android:visibility="gone" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="理由：" />
+
+            <EditText
+                android:id="@+id/reason"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/pay"
+            style="@style/check_row"
+            android:layout_marginTop="8dp"
+            android:text="结帐" />
+    </LinearLayout>
 
 </RelativeLayout>

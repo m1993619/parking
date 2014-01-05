@@ -141,7 +141,6 @@ public class ParkingListFragment extends Fragment
 			int f_id = Integer.parseInt((String) ((TextView) arg1.findViewById(R.id.f_id)).getText());
 			int f_state = Integer.parseInt((String) ((TextView) arg1.findViewById(R.id.f_state))
 					.getText());
-			System.out.println("this is ParkingCode:" + parking_code);
 
 			if (0 == f_state)
 			{
@@ -152,8 +151,28 @@ public class ParkingListFragment extends Fragment
 				startActivity(intent);
 			}
 			else
-				startActivity(new Intent(getActivity(), ParkingCheckOutActivity.class));
+			{
+				String f_street_name = (String) ((TextView) arg1
+						.findViewById(R.id.f_street_name)).getText();
+				String f_car_no = (String) ((TextView) arg1.findViewById(R.id.f_car_no))
+						.getText();
+				String f_parking_stamp = (String) ((TextView) arg1
+						.findViewById(R.id.f_parking_stamp)).getText();
+				String pre_pay = (String) ((TextView) arg1.findViewById(R.id.act_cost))
+						.getText();
 
+				String f_key = (String) ((TextView) arg1.findViewById(R.id.f_key))
+						.getText();
+				Intent intent = new Intent(getActivity(), ParkingCheckOutActivity.class);
+				intent.putExtra("f_id", f_id);
+				intent.putExtra("f_key", f_key);
+				intent.putExtra("parking_code", parking_code);
+				intent.putExtra("f_car_no", f_car_no);
+				intent.putExtra("f_parking_stamp", f_parking_stamp);
+				intent.putExtra("f_street_name", f_street_name);
+				intent.putExtra("pre_pay", pre_pay);
+				startActivity(intent);
+			}
 			return true;
 
 		}

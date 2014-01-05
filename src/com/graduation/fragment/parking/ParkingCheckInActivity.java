@@ -60,7 +60,8 @@ public class ParkingCheckInActivity extends Activity
 			"蒙", "闽", "宁", "青", "鄂", "琼", "苏", "皖", "湘", "新", "陕", "渝", "冀", "豫", "云", "粤", "浙", "藏" };
 	private final String[] CITY = new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
 			"N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
-	private final Double[] ACT_COST = new Double[] { (double) 0,(double) 5, (double) 10, (double) 20, (double) 50, (double) 100 };
+	private final Double[] ACT_COST = new Double[] { (double) 0, (double) 5, (double) 10, (double) 20,
+			(double) 50, (double) 100 };
 	private final String[] CAR_TYPE = new String[] { "小型轿车", "小型货车", "大型货车", "执勤车辆", "特殊车辆", "其他" };
 	private final String[] CAR_STATE = new String[] { "车况良好", "轻微擦伤", "严重损坏", "其他" };
 
@@ -130,6 +131,7 @@ public class ParkingCheckInActivity extends Activity
 		car_state_sp.setAdapter(car_state_ada);
 
 		setListener();
+
 	}
 
 	private void save()
@@ -170,7 +172,7 @@ public class ParkingCheckInActivity extends Activity
 		protected Boolean doInBackground(Void... params)
 		{
 			Timestamp time = TimeUtil.getTime();
-			car_no = province + city +" "+ car_no;
+			car_no = province + city + " " + car_no;
 			ArrayList<Object> list = new ArrayList<Object>();
 			list.add(key);
 			list.add(car_no);
@@ -197,12 +199,13 @@ public class ParkingCheckInActivity extends Activity
 		@Override
 		protected void onPostExecute(Boolean result)
 		{
-			
+
 			if (result)
 			{
-				Toast.makeText(ParkingCheckInActivity.this, "update success!", Toast.LENGTH_LONG).show();
-				Intent intent = new Intent(ParkingCheckInActivity.this,MainActivity.class);
-				intent.putExtra("state","checkin");
+				Toast.makeText(ParkingCheckInActivity.this, "update success!",
+						Toast.LENGTH_LONG).show();
+				Intent intent = new Intent(ParkingCheckInActivity.this, MainActivity.class);
+				intent.putExtra("state", "check");
 				startActivity(intent);
 				finish();
 
@@ -253,7 +256,7 @@ public class ParkingCheckInActivity extends Activity
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3)
 			{
-				act_cost = (Double)(ACT_COST[arg2]);
+				act_cost = (Double) (ACT_COST[arg2]);
 			}
 
 			@Override

@@ -83,6 +83,10 @@
         <TextView
             android:id="@+id/f_car_type"
             style="@style/item_space_gone" />
+
+        <TextView
+            android:id="@+id/f_street_name"
+            style="@style/item_space_gone" />
     </LinearLayout>
 
 </RelativeLayout>

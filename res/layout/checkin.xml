@@ -107,7 +107,7 @@
                 <EditText
                     android:id="@+id/car_no"
                     style="@style/check_text"
-                    android:inputType="textCapWords"
+                    android:inputType="textCapCharacters"
                     android:maxLength="5" />
 
                 <TextView

@@ -98,7 +98,7 @@ public class MainActivity extends FragmentActivity
 		super.onResume();
 		Intent intent = getIntent();
 		String state = intent.getStringExtra("state");
-		if ("checkin".equals(state))
+		if ("check".equals(state))
 		{
 			selectItem(0);
 		}

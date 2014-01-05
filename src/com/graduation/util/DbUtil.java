@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import android.content.SharedPreferences;
+
 import com.gratuation.model.Parking;
 import com.gratuation.model.User;
 
@@ -59,6 +61,39 @@ public class DbUtil
 
 		return i;
 
+	}
+
+	public static int checkout(ArrayList<Object> list)
+	{
+		int i = 0;
+
+		String sql1 = "update t_parking_record set f_leave_stamp = ?,f_cost = ?, f_act_cost = ?,f_cost_type = ?,f_reason = ?,f_coster_id = ? where f_key = ?";
+		String sql2 = "update t_parking set f_state = 0 where f_id = ?";
+
+		PreparedStatement ps1 = getPStatement(sql1);
+		PreparedStatement ps2 = getPStatement(sql2);
+
+		try
+		{
+			ps1.setTimestamp(1, (Timestamp) list.get(0));
+			ps1.setDouble(2, (Double) list.get(1));
+			ps1.setDouble(3, (Double) list.get(2));
+			ps1.setString(4, (String) list.get(3));
+			ps1.setString(5, (String) list.get(4));
+			ps1.setInt(6, (Integer) list.get(5));
+			ps1.setString(7, (String) list.get(6));
+
+			ps2.setInt(1, (Integer) list.get(7));
+
+			i = ps1.executeUpdate();
+			ps2.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return i;
 	}
 
 	public static User login(String username, String password)
@@ -155,6 +190,7 @@ public class DbUtil
 				map.put("f_car_type", rs.getString(9));
 				map.put("f_parking_stamp", rs.getTimestamp(10));
 				map.put("f_car_no", rs.getString(11));
+				map.put("f_street_name", rs.getString(12));
 				map.put("f_act_cost", rs.getDouble(13));
 
 				list.add(map);

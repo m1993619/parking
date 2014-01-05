@@ -79,6 +79,8 @@ public class ParkingListAdapter extends BaseAdapter
 			((TextView) view.findViewById(R.id.f_is_free)).setText(Integer.toString((Integer) (list
 					.get(position).get("f_is_free"))));
 
+			((TextView) view.findViewById(R.id.f_street_name)).setText((String) list.get(position)
+					.get("f_street_name"));
 		}
 		else
 		{
@@ -115,6 +117,8 @@ public class ParkingListAdapter extends BaseAdapter
 
 			((TextView) view.findViewById(R.id.act_cost)).setText("预收金额："
 					+ String.valueOf(list.get(position).get("f_act_cost")) + "元");
+			((TextView) view.findViewById(R.id.f_street_name)).setText((String) list.get(position)
+					.get("f_street_name"));
 		}
 
 		return view;
