@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 import com.graduation.parking.MainActivity;
 import com.graduation.parking.R;
 import com.graduation.util.DbUtil;
+import com.graduation.util.DialogUtil;
 import com.graduation.util.TimeUtil;
 
 public class ParkingCheckOutActivity extends Activity
@@ -56,8 +58,6 @@ public class ParkingCheckOutActivity extends Activity
 	private Button pay;
 
 	private View reason_view;
-	private View progress;
-	private View form;
 
 	private SharedPreferences sp;
 
@@ -98,8 +98,6 @@ public class ParkingCheckOutActivity extends Activity
 		cost_type_sp.setOnItemSelectedListener(new CostTypeListener());
 
 		reason_view = (View) findViewById(R.id.reason_view);
-		progress = (View) findViewById(R.id.progress);
-		form = (View) findViewById(R.id.form);
 
 		pay = (Button) findViewById(R.id.pay);
 		pay.setOnClickListener(new OnClickListener() {
@@ -128,7 +126,6 @@ public class ParkingCheckOutActivity extends Activity
 
 	private void update()
 	{
-		// TODO Auto-generated method stub
 		if (reason_view.getVisibility() == View.VISIBLE)
 			reason = reason_text.getText().toString();
 
@@ -150,7 +147,7 @@ public class ParkingCheckOutActivity extends Activity
 		}
 		else
 		{
-			showProgress(true);
+
 			new CheckOutTask().execute();
 		}
 
@@ -159,10 +156,19 @@ public class ParkingCheckOutActivity extends Activity
 	private class CheckOutTask extends AsyncTask<Void, Void, Boolean>
 	{
 
+		@SuppressWarnings("deprecation")
+		@Override
+		protected void onPreExecute()
+		{
+			super.onPreExecute();
+
+			ParkingCheckOutActivity.this.showDialog(DialogUtil.PROGRESS_DIALOG);
+
+		}
+
 		@Override
 		protected Boolean doInBackground(Void... params)
 		{
-			// TODO Auto-generated method stub
 			Timestamp leave_stamp = TimeUtil.getTime();
 
 			ArrayList<Object> list = new ArrayList<Object>();
@@ -179,25 +185,27 @@ public class ParkingCheckOutActivity extends Activity
 			return (1 == i ? true : false);
 		}
 
+		@SuppressWarnings("deprecation")
 		@Override
 		protected void onPostExecute(Boolean result)
 		{
-			// TODO Auto-generated method stub
 
 			if (result)
 			{
-				Toast.makeText(ParkingCheckOutActivity.this, "update success!",
-						Toast.LENGTH_LONG).show();
+
 				Intent intent = new Intent(ParkingCheckOutActivity.this, MainActivity.class);
 				intent.putExtra("state", "check");
 				startActivity(intent);
+				Toast.makeText(ParkingCheckOutActivity.this, "update success!",
+						Toast.LENGTH_LONG).show();
 				finish();
 			}
 			else
 			{
-				showProgress(false);
-				Toast.makeText(ParkingCheckOutActivity.this, "false", Toast.LENGTH_SHORT)
-						.show();
+
+				ParkingCheckOutActivity.this.dismissDialog(DialogUtil.PROGRESS_DIALOG);
+				Toast.makeText(ParkingCheckOutActivity.this, "update failed!",
+						Toast.LENGTH_LONG).show();
 			}
 
 		}
@@ -209,7 +217,6 @@ public class ParkingCheckOutActivity extends Activity
 		@Override
 		public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3)
 		{
-			// TODO Auto-generated method stub
 			reason_view.setVisibility(View.GONE);
 			reason = "";
 			switch (arg2)
@@ -242,16 +249,17 @@ public class ParkingCheckOutActivity extends Activity
 		@Override
 		public void onNothingSelected(AdapterView<?> arg0)
 		{
-			// TODO Auto-generated method stub
 
 		}
 
 	}
 
-	private void showProgress(boolean show)
+	@Override
+	@Deprecated
+	protected Dialog onCreateDialog(int id)
 	{
-		progress.setVisibility(show ? View.VISIBLE : View.GONE);
-		form.setVisibility(show ? View.GONE : View.VISIBLE);
+		return DialogUtil.showDialog(this, id);
+
 	}
 
 	public boolean onNavigateUp()

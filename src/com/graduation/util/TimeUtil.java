@@ -1,5 +1,6 @@
 package com.graduation.util;
 
+import android.annotation.SuppressLint;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -8,12 +9,14 @@ import java.util.HashMap;
 public class TimeUtil
 {
 
+	@SuppressLint("SimpleDateFormat")
 	public static String createParkingRecordKey()
 	{
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 		return sdf.format(new Date());
 	}
 
+	@SuppressLint("SimpleDateFormat")
 	public static Timestamp getTime()
 	{
 
@@ -26,6 +29,7 @@ public class TimeUtil
 
 	}
 
+	@SuppressLint("SimpleDateFormat")
 	public static HashMap<String, String> getParkingFee(String timestamp)
 	{
 		HashMap<String, String> map = new HashMap<String, String>();

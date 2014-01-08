@@ -1,21 +1,22 @@
 package com.graduation.parking;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.graduation.util.DbUtil;
+import com.graduation.util.DialogUtil;
 
+@SuppressLint("CommitPrefEdits")
 public class UserInfoActivity extends Activity
 {
 
@@ -29,7 +30,6 @@ public class UserInfoActivity extends Activity
 	private EditText f_type;
 	private EditText f_shift_name;
 	private EditText f_street_name;
-	private ProgressBar progress;
 	private Button button;
 
 	@Override
@@ -40,7 +40,6 @@ public class UserInfoActivity extends Activity
 		setContentView(R.layout.user_info);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
-		progress = (ProgressBar) findViewById(R.id.progress);
 		button = (Button) findViewById(R.id.up_user_info);
 
 		f_name = (EditText) findViewById(R.id.f_name);
@@ -60,7 +59,6 @@ public class UserInfoActivity extends Activity
 			@Override
 			public void onClick(View v)
 			{
-				progress.setVisibility(View.VISIBLE);
 				new UpdateTask().execute();
 			}
 		});
@@ -79,6 +77,16 @@ public class UserInfoActivity extends Activity
 
 	private class UpdateTask extends AsyncTask<Void, Void, Boolean>
 	{
+
+		@SuppressWarnings("deprecation")
+		@Override
+		protected void onPreExecute()
+		{
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			UserInfoActivity.this.showDialog(DialogUtil.PROGRESS_DIALOG);
+
+		}
 
 		@Override
 		protected Boolean doInBackground(Void... params)
@@ -102,28 +110,36 @@ public class UserInfoActivity extends Activity
 				return false;
 		}
 
+		@SuppressWarnings("deprecation")
 		@Override
 		protected void onPostExecute(Boolean result)
 		{
-			// TODO Auto-generated method stub
+
+			UserInfoActivity.this.dismissDialog(DialogUtil.PROGRESS_DIALOG);
 			if (result)
 			{
 				System.out.println("success");
 				f_password.setEnabled(false);
 				f_phone.setEnabled(false);
 				button.setVisibility(View.GONE);
-				progress.setVisibility(View.GONE);
-				Toast.makeText(UserInfoActivity.this, "更新数据成功", Toast.LENGTH_SHORT).show();
+				Toast.makeText(UserInfoActivity.this, "更新数据成功!", Toast.LENGTH_SHORT).show();
 			}
 			else
 			{
 				System.out.println("fail");
-				progress.setVisibility(View.GONE);
 				Toast.makeText(UserInfoActivity.this, "更新数据失败，请重试！", Toast.LENGTH_SHORT).show();
 			}
 
 		}
 
+	}
+
+	@Override
+	@Deprecated
+	protected Dialog onCreateDialog(int id)
+	{
+		// TODO Auto-generated method stub
+		return DialogUtil.showDialog(this, id);
 	}
 
 	@Override

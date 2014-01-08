@@ -1,6 +1,5 @@
 package com.graduation.util;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -12,16 +11,67 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import android.content.SharedPreferences;
-
-import com.gratuation.model.Parking;
 import com.gratuation.model.User;
 
 public class DbUtil
 {
-	private static String URL = "jdbc:postgresql://172.16.139.19:5432/parking";
-	private static String DB_USERNAME = "parking";
-	private static String DB_PASSWORD = "parking";
+
+	private static final String URL = "jdbc:postgresql://172.16.139.19:5432/parking";
+	private static final String DB_USERNAME = "parking";
+	private static final String DB_PASSWORD = "parking";
+
+	public static int chekinEdit(ArrayList<Object> list, Boolean changed)
+	{
+		int i = 0;
+		String sql1 = "update t_parking_record set f_car_no = ? ,f_car_type = ?, f_car_state = ?,f_act_cost = ? where f_key = ? ";
+		String sql2 = "update t_parking_record set f_car_no = ? ,f_car_type = ?, f_car_state = ?,f_act_cost = ? ,f_parking_code = ? where f_key = ?";
+		String sql3 = "update t_parking set f_state = 0 where f_id = ?";
+		String sql4 = "update t_parking set f_state = 1 ,f_key = ? where f_code = ? and f_street_id = ?";
+
+		PreparedStatement ps1 = getPStatement(sql1);
+		PreparedStatement ps2 = getPStatement(sql2);
+		PreparedStatement ps3 = getPStatement(sql3);
+		PreparedStatement ps4 = getPStatement(sql4);
+
+		try
+		{
+			if (!changed)
+			{
+				ps1.setString(1, (String) list.get(0));
+				ps1.setString(2, (String) list.get(1));
+				ps1.setString(3, (String) list.get(2));
+				ps1.setDouble(4, (Double) list.get(3));
+				ps1.setString(5, (String) list.get(4));
+
+				i = ps1.executeUpdate();
+			}
+			else
+			{
+				ps2.setString(1, (String) list.get(0));
+				ps2.setString(2, (String) list.get(1));
+				ps2.setString(3, (String) list.get(2));
+				ps2.setDouble(4, (Double) list.get(3));
+				ps2.setString(5, (String) list.get(6));
+				ps2.setString(6, (String) list.get(4));
+				ps3.setInt(1, (Integer) list.get(5));
+				ps4.setString(1, (String) list.get(4));
+				ps4.setString(2, (String) list.get(6));
+				ps4.setInt(3, (Integer) list.get(7));
+
+				i = ps2.executeUpdate();
+				ps3.executeUpdate();
+				ps4.executeUpdate();
+
+			}
+
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+
+		return i;
+	}
 
 	public static int checkin(ArrayList<Object> list)
 	{
@@ -158,12 +208,12 @@ public class DbUtil
 		return i;
 	}
 
-	public static List<HashMap<String, Object>> getParkingList(int id)
+	public static ArrayList<HashMap<String, Object>> getParkingList(int id)
 	{
-		List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
+		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 		String sql = "	select p.f_id,p.f_code,p.f_name,p.f_street_id,p.f_type,p.f_state,"
 				+ "p.f_is_free,p.f_key,rd.f_car_type,rd.f_parking_stamp,"
-				+ "rd.f_car_no,s.f_name as f_street_name,rd.f_act_cost from t_parking p "
+				+ "rd.f_car_no,s.f_name as f_street_name,rd.f_act_cost,rd.f_car_state from t_parking p "
 				+ "left join t_parking_record rd on rd.f_key = p.f_key "
 				+ "left join t_street s on p.f_street_id = s.f_id "
 				+ "left join t_parking_image tpi on tpi.f_key = rd.f_key "
@@ -192,6 +242,7 @@ public class DbUtil
 				map.put("f_car_no", rs.getString(11));
 				map.put("f_street_name", rs.getString(12));
 				map.put("f_act_cost", rs.getDouble(13));
+				map.put("f_car_state", rs.getString(14));
 
 				list.add(map);
 			}
@@ -265,4 +316,5 @@ public class DbUtil
 		return pStatement;
 
 	}
+
 }

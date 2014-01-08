@@ -27,7 +27,7 @@ public class ParkingListFragment extends Fragment
 {
 
 	private ListView listView;
-	private List<HashMap<String, Object>> list;
+	private ArrayList<HashMap<String, Object>> list;
 	private SearchView search;
 
 	private SharedPreferences sp;
@@ -53,7 +53,6 @@ public class ParkingListFragment extends Fragment
 
 		listView.setTextFilterEnabled(true);
 
-		getActivity();
 		sp = getActivity().getSharedPreferences("user", Context.MODE_PRIVATE);
 		id = sp.getInt("f_id", 0);
 		new getListTask().execute();
@@ -100,7 +99,7 @@ public class ParkingListFragment extends Fragment
 			else
 			{
 				listView.setFilterText(newText);
-				List<HashMap<String, Object>> searchList = new ArrayList<HashMap<String, Object>>();
+				ArrayList<HashMap<String, Object>> searchList = new ArrayList<HashMap<String, Object>>();
 
 				for (int i = 0; i < list.size(); i++)
 				{
@@ -134,46 +133,75 @@ public class ParkingListFragment extends Fragment
 		@Override
 		public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
 		{
-			String parking_code = (String) ((TextView) arg1.findViewById(R.id.f_code)).getText();
-			int street_id = Integer
-					.parseInt((String) ((TextView) arg1.findViewById(R.id.f_street_id))
-							.getText());
-			int f_id = Integer.parseInt((String) ((TextView) arg1.findViewById(R.id.f_id)).getText());
 			int f_state = Integer.parseInt((String) ((TextView) arg1.findViewById(R.id.f_state))
 					.getText());
 
 			if (0 == f_state)
 			{
+				HashMap<String, Object> map = getNoCarItem(arg1);
+
 				Intent intent = new Intent(getActivity(), ParkingCheckInActivity.class);
-				intent.putExtra("parking_code", parking_code);
-				intent.putExtra("f_street_id", street_id);
-				intent.putExtra("f_id", f_id);
+				intent.putExtra("parking_code", (String) map.get("f_code"));
+				intent.putExtra("f_street_id", (Integer) map.get("f_street_id"));
+				intent.putExtra("f_id", (Integer) map.get("f_id"));
 				startActivity(intent);
 			}
 			else
 			{
-				String f_street_name = (String) ((TextView) arg1
-						.findViewById(R.id.f_street_name)).getText();
-				String f_car_no = (String) ((TextView) arg1.findViewById(R.id.f_car_no))
-						.getText();
-				String f_parking_stamp = (String) ((TextView) arg1
-						.findViewById(R.id.f_parking_stamp)).getText();
-				String pre_pay = (String) ((TextView) arg1.findViewById(R.id.act_cost))
-						.getText();
+				HashMap<String, Object> map = getHasCarItem(arg1);
 
-				String f_key = (String) ((TextView) arg1.findViewById(R.id.f_key))
-						.getText();
 				Intent intent = new Intent(getActivity(), ParkingCheckOutActivity.class);
-				intent.putExtra("f_id", f_id);
-				intent.putExtra("f_key", f_key);
-				intent.putExtra("parking_code", parking_code);
-				intent.putExtra("f_car_no", f_car_no);
-				intent.putExtra("f_parking_stamp", f_parking_stamp);
-				intent.putExtra("f_street_name", f_street_name);
-				intent.putExtra("pre_pay", pre_pay);
+				intent.putExtra("f_id", (Integer) map.get("f_id"));
+				intent.putExtra("f_key", (String) map.get("f_key"));
+				intent.putExtra("parking_code", (String) map.get("f_code"));
+				intent.putExtra("f_car_no", (String) map.get("f_car_no"));
+				intent.putExtra("f_parking_stamp", (String) map.get("f_parking_stamp"));
+				intent.putExtra("f_street_name", (String) map.get("f_street_name"));
+				intent.putExtra("pre_pay", (String) map.get("pre_pay"));
 				startActivity(intent);
 			}
 			return true;
+		}
+
+		private HashMap<String, Object> getNoCarItem(View view)
+		{
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			String f_code = (String) ((TextView) view.findViewById(R.id.f_code)).getText();
+			int f_street_id = Integer.parseInt((String) ((TextView) view
+					.findViewById(R.id.f_street_id)).getText());
+			int f_id = Integer.parseInt((String) ((TextView) view.findViewById(R.id.f_id)).getText());
+
+			map.put("f_id", f_id);
+			map.put("f_street_id", f_street_id);
+			map.put("f_code", f_code);
+
+			return map;
+
+		}
+
+		private HashMap<String, Object> getHasCarItem(View view)
+		{
+			HashMap<String, Object> map = new HashMap<String, Object>();
+
+			String f_street_name = (String) ((TextView) view.findViewById(R.id.f_street_name))
+					.getText();
+			String f_car_no = (String) ((TextView) view.findViewById(R.id.f_car_no)).getText();
+			String f_parking_stamp = (String) ((TextView) view.findViewById(R.id.f_parking_stamp))
+					.getText();
+			String pre_pay = (String) ((TextView) view.findViewById(R.id.act_cost)).getText();
+			String f_key = (String) ((TextView) view.findViewById(R.id.f_key)).getText();
+			int f_id = Integer.parseInt((String) ((TextView) view.findViewById(R.id.f_id)).getText());
+			String f_code = (String) ((TextView) view.findViewById(R.id.f_code)).getText();
+
+			map.put("f_street_name", f_street_name);
+			map.put("f_car_no", f_car_no);
+			map.put("f_parking_stamp", f_parking_stamp);
+			map.put("pre_pay", pre_pay);
+			map.put("f_key", f_key);
+			map.put("f_id", f_id);
+			map.put("f_code", f_code);
+
+			return map;
 
 		}
 	}

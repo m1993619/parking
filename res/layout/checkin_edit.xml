@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    android:layout_marginTop="24dp" >
+
+    <LinearLayout
+        android:id="@+id/form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            style="@style/check_row"
+            android:layout_marginBottom="8dp"
+            android:text="修改停车记录"
+            android:textSize="20sp" />
+
+        <LinearLayout style="@style/check_row" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="bottom"
+                android:text="车辆照片：" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/plus" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <View style="@style/line" />
+
+        <LinearLayout style="@style/check_row" >
+
+            <TextView
+                style="@style/check_text"
+                android:text="车辆所在省：" />
+
+            <TextView
+                style="@style/check_text"
+                android:text="车辆所在地：" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/check_row"
+            android:layout_marginBottom="16dp" >
+
+            <Spinner
+                android:id="@+id/province"
+                style="@style/check_text" />
+
+            <Spinner
+                android:id="@+id/city"
+                style="@style/check_text" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/check_row" >
+
+            <TextView
+                style="@style/check_text"
+                android:text="车牌号：" />
+
+            <TextView
+                style="@style/check_text"
+                android:text="车位编号：" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/check_row" >
+
+            <EditText
+                android:id="@+id/car_no"
+                style="@style/check_text"
+                android:inputType="textCapCharacters"
+                android:maxLength="5" />
+
+            <Spinner
+                android:id="@+id/parking_code"
+                style="@style/check_text" />
+        </LinearLayout>
+
+        <View style="@style/line" />
+
+        <LinearLayout style="@style/check_row" >
+
+            <TextView
+                style="@style/check_text"
+                android:text="车辆类型：" />
+
+            <TextView
+                style="@style/check_text"
+                android:text="车辆状况：" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/check_row"
+            android:layout_marginBottom="16dp" >
+
+            <Spinner
+                android:id="@+id/car_type"
+                style="@style/check_text" />
+
+            <Spinner
+                android:id="@+id/car_state"
+                style="@style/check_text" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/check_row"
+            android:text="预收金额(元)：" />
+
+        <LinearLayout
+            style="@style/check_row"
+            android:layout_marginBottom="16dp" >
+
+            <Spinner
+                android:id="@+id/act_cost"
+                style="@style/check_text" />
+
+            <TextView style="@style/check_text" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/save"
+            style="@style/check_row"
+            android:layout_marginTop="16dp"
+            android:text="保存" />
+    </LinearLayout>
+
+</ScrollView>

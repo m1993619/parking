@@ -1,8 +1,8 @@
 package com.graduation.parking;
 
-import com.graduation.fragment.parking.ParkingListFragment;
-
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -11,6 +11,7 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,6 +19,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.graduation.fragment.parking.ParkingListFragment;
 
 public class MainActivity extends FragmentActivity
 {
@@ -202,4 +205,40 @@ public class MainActivity extends FragmentActivity
 		mDrawerToggle.onConfigurationChanged(newConfig);
 	}
 
+	public boolean onKeyDown(int keyCode, KeyEvent event)
+	{
+
+		// 按下键盘上返回按钮
+		if (keyCode == KeyEvent.KEYCODE_BACK)
+		{
+			new AlertDialog.Builder(this)
+			// Main.this视情况而定，这个一般是指当前显示的Activity对应的XML视窗。
+					.setTitle("")// 设置对话框的标题
+					.setMessage(" 确定退出? ")// 设置对话框的内容
+					.setPositiveButton("确定",// 设置对话框的确认按钮
+							new DialogInterface.OnClickListener() {// 设置确认按钮的事件
+								public void onClick(DialogInterface dialog,
+										int which)
+								{
+									// 退出程序
+									android.os.Process.killProcess(android.os.Process
+											.myPid());
+								}
+							}).setNegativeButton("取消",// 设置对话框的取消按钮
+							new DialogInterface.OnClickListener() {// 设置取消按钮的事件
+								public void onClick(DialogInterface dialog,
+										int which)
+								{
+									// 如果你什么操作都不做，可以选择不写入任何代码
+									dialog.cancel();
+								}
+							}).show();
+
+			return true;
+		}
+		else
+		{
+			return super.onKeyDown(keyCode, event);
+		}
+	}
 }
