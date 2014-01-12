@@ -207,14 +207,11 @@ public class MainActivity extends FragmentActivity
 
 	public boolean onKeyDown(int keyCode, KeyEvent event)
 	{
-
 		// 按下键盘上返回按钮
 		if (keyCode == KeyEvent.KEYCODE_BACK)
 		{
-			new AlertDialog.Builder(this)
-			// Main.this视情况而定，这个一般是指当前显示的Activity对应的XML视窗。
-					.setTitle("")// 设置对话框的标题
-					.setMessage(" 确定退出? ")// 设置对话框的内容
+			new AlertDialog.Builder(this).setTitle("")// 设置对话框的标题
+					.setMessage(" 确定退出程序? ")// 设置对话框的内容
 					.setPositiveButton("确定",// 设置对话框的确认按钮
 							new DialogInterface.OnClickListener() {// 设置确认按钮的事件
 								public void onClick(DialogInterface dialog,

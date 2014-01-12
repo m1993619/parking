@@ -61,7 +61,7 @@ public class ParkingCheckOutActivity extends Activity
 
 	private SharedPreferences sp;
 
-	private String[] COST_TYPE = new String[] { "正常缴费", "免费时段", "免费车辆", "逃逸", "其他" };
+	private final String[] COST_TYPE = new String[] { "正常缴费", "免费时段", "免费车辆", "车辆逃逸", "其他情况" };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -126,9 +126,7 @@ public class ParkingCheckOutActivity extends Activity
 
 	private void update()
 	{
-		if (reason_view.getVisibility() == View.VISIBLE)
-			reason = reason_text.getText().toString();
-
+		reason = reason_text.getText().toString();
 		act_cost = act_cost_text.getText().toString();
 
 		boolean cancel = false;
@@ -148,6 +146,7 @@ public class ParkingCheckOutActivity extends Activity
 		else
 		{
 
+			System.out.println(reason);
 			new CheckOutTask().execute();
 		}
 
@@ -218,31 +217,18 @@ public class ParkingCheckOutActivity extends Activity
 		public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3)
 		{
 			reason_view.setVisibility(View.GONE);
-			reason = "";
-			switch (arg2)
-			{
-			case 0:
+			reason_text.setText("");
+			cost_type = COST_TYPE[arg2];
+
+			if (arg2 == 0)
 				act_cost_text.setText(cost);
-				cost_type = COST_TYPE[0];
-				break;
-			case 1:
-				act_cost_text.setText("0");
-				cost_type = COST_TYPE[1];
-				break;
-			case 2:
-				act_cost_text.setText("0");
-				cost_type = COST_TYPE[2];
-				break;
-			case 3:
-				act_cost_text.setText("0");
-				cost_type = COST_TYPE[3];
-				break;
-			case 4:
+			else if (arg2 == 4)
+			{
 				reason_view.setVisibility(View.VISIBLE);
 				act_cost_text.setText("0");
-				cost_type = COST_TYPE[4];
-				break;
 			}
+			else
+				act_cost_text.setText("0");
 
 		}
 

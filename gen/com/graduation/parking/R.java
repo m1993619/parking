@@ -46,7 +46,7 @@ public final class R {
     }
     public static final class id {
         public static final int act_cost=0x7f0a0008;
-        public static final int action_forgot_password=0x7f0a003a;
+        public static final int action_forgot_password=0x7f0a003b;
         public static final int car_no=0x7f0a0006;
         public static final int car_state=0x7f0a000a;
         public static final int car_type=0x7f0a0009;
@@ -55,8 +55,9 @@ public final class R {
         public static final int content_frame=0x7f0a0001;
         public static final int cost=0x7f0a0010;
         public static final int cost_type=0x7f0a0012;
+        public static final int delete_record=0x7f0a003a;
         public static final int drawer_layout=0x7f0a0000;
-        public static final int exit=0x7f0a003d;
+        public static final int exit=0x7f0a003e;
         public static final int f_account=0x7f0a0032;
         public static final int f_car_no=0x7f0a001f;
         public static final int f_car_state=0x7f0a002a;
@@ -85,7 +86,7 @@ public final class R {
         public static final int login_form=0x7f0a0018;
         public static final int login_status=0x7f0a0016;
         public static final int login_status_message=0x7f0a0017;
-        public static final int logout=0x7f0a003b;
+        public static final int logout=0x7f0a003c;
         public static final int parking_code=0x7f0a0007;
         public static final int parking_icon=0x7f0a002d;
         public static final int parking_list=0x7f0a002c;
@@ -105,8 +106,8 @@ public final class R {
         public static final int street_name=0x7f0a000e;
         public static final int time=0x7f0a000d;
         public static final int up_user_info=0x7f0a0037;
-        public static final int user_info_edit=0x7f0a003e;
-        public static final int user_infomation=0x7f0a003c;
+        public static final int user_info_edit=0x7f0a003f;
+        public static final int user_infomation=0x7f0a003d;
         public static final int username=0x7f0a0019;
     }
     public static final class layout {
@@ -124,9 +125,10 @@ public final class R {
         public static final int welcome=0x7f03000b;
     }
     public static final class menu {
-        public static final int login=0x7f090000;
-        public static final int main=0x7f090001;
-        public static final int user_info=0x7f090002;
+        public static final int checkin_edit=0x7f090000;
+        public static final int login=0x7f090001;
+        public static final int main=0x7f090002;
+        public static final int user_info=0x7f090003;
     }
     public static final class string {
         public static final int action_forgot_password=0x7f05000f;

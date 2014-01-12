@@ -3,12 +3,16 @@ package com.graduation.fragment.parking;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -154,12 +158,12 @@ public class ParkingCheckInEditActivity extends Activity
 		}
 		else
 		{
-			new CheckInEditTask().execute();
+			new CheckInEditTask().execute(1);
 		}
 
 	}
 
-	private class CheckInEditTask extends AsyncTask<Void, Void, Boolean>
+	private class CheckInEditTask extends AsyncTask<Integer, Void, Boolean>
 	{
 
 		@Override
@@ -170,7 +174,7 @@ public class ParkingCheckInEditActivity extends Activity
 		}
 
 		@Override
-		protected Boolean doInBackground(Void... params)
+		protected Boolean doInBackground(Integer... state)
 		{
 			car_no = province + city + " " + car_no;
 
@@ -183,10 +187,11 @@ public class ParkingCheckInEditActivity extends Activity
 			list.add(f_id);
 			list.add(newCode);
 			list.add(f_street_id);
-			
-			System.out.println("newCode:"+newCode+";parking_code:"+parking_code+code_changed);
 
-			int i = DbUtil.chekinEdit(list, code_changed);
+			System.out.println(f_key);
+
+			int i = (state[0] == 1 ? DbUtil.chekinEdit(list, code_changed) : DbUtil.deleteRecord(
+					f_key, f_id));
 
 			return (i == 1 ? true : false);
 		}
@@ -230,6 +235,45 @@ public class ParkingCheckInEditActivity extends Activity
 	{
 		finish();
 		return super.onNavigateUp();
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu)
+	{
+		super.onCreateOptionsMenu(menu);
+		getMenuInflater().inflate(R.menu.checkin_edit, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		// TODO Auto-generated method stub
+		switch (item.getItemId())
+		{
+		case R.id.delete_record:
+			new AlertDialog.Builder(this).setTitle("")// 设置对话框的标题
+					.setMessage(" 确定删除此记录? ")// 设置对话框的内容
+					.setPositiveButton("确定",// 设置对话框的确认按钮
+							new DialogInterface.OnClickListener() {// 设置确认按钮的事件
+								public void onClick(DialogInterface dialog,
+										int which)
+								{
+									new CheckInEditTask()
+											.execute(2);
+								}
+							}).setNegativeButton("取消",// 设置对话框的取消按钮
+							new DialogInterface.OnClickListener() {// 设置取消按钮的事件
+								public void onClick(DialogInterface dialog,
+										int which)
+								{
+									// 如果你什么操作都不做，可以选择不写入任何代码
+									dialog.cancel();
+								}
+							}).show();
+		}
+
+		return super.onOptionsItemSelected(item);
 	}
 
 }

@@ -16,9 +16,37 @@ import com.gratuation.model.User;
 public class DbUtil
 {
 
-	private static final String URL = "jdbc:postgresql://172.16.139.19:5432/parking";
+	private static final String URL = "jdbc:postgresql://192.168.1.104:5432/parking";
 	private static final String DB_USERNAME = "parking";
 	private static final String DB_PASSWORD = "parking";
+
+	public static int deleteRecord(String key, int id)
+	{
+		int i = 0;
+		String sql1 = "delete from t_parking_record where f_key = ?";
+		String sql2 = "update t_parking set f_state = 0 where f_id = ?";
+
+		PreparedStatement ps1 = getPStatement(sql1);
+		PreparedStatement ps2 = getPStatement(sql2);
+
+		try
+		{
+			ps1.setString(1, key);
+			ps2.setInt(1, id);
+
+			i = ps1.executeUpdate();
+			ps2.executeUpdate();
+
+		}
+		catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return i;
+
+	}
 
 	public static int chekinEdit(ArrayList<Object> list, Boolean changed)
 	{
