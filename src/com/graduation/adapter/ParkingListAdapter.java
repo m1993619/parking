@@ -7,6 +7,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -60,13 +61,14 @@ public class ParkingListAdapter extends BaseAdapter
 		}
 		return code;
 	}
+
 	private ArrayList<String> getHasCar()
 	{
 		ArrayList<String> hasCar = new ArrayList<String>();
-		for(HashMap map :list)
+		for (HashMap map : list)
 		{
-			if((Integer)map.get("f_state") == 1)
-				hasCar.add((String)map.get("f_code"));
+			if ((Integer) map.get("f_state") == 1)
+				hasCar.add((String) map.get("f_code"));
 		}
 		return hasCar;
 	}
@@ -92,6 +94,7 @@ public class ParkingListAdapter extends BaseAdapter
 		Timestamp f_parking_stamp = (Timestamp) map.get("f_parking_stamp");
 		final Double f_act_cost = (Double) map.get("f_act_cost");
 		final String f_car_state = (String) map.get("f_car_state");
+		final int f_escape_count = (Integer) map.get("f_escape_count");
 
 		if (0 == f_state)
 		{
@@ -148,6 +151,13 @@ public class ParkingListAdapter extends BaseAdapter
 					+ String.valueOf(f_act_cost) + "元");
 			((TextView) view.findViewById(R.id.f_street_name)).setText(f_street_name);
 			((TextView) view.findViewById(R.id.f_car_state)).setText(f_car_state);
+			if (f_escape_count > 0)
+			{
+				((TextView) view.findViewById(R.id.f_escape)).setText("警告：" + f_escape_count
+						+ "次逃逸记录");
+				((TextView) view.findViewById(R.id.f_escape))
+						.setTextColor(android.graphics.Color.RED);
+			}
 
 		}
 

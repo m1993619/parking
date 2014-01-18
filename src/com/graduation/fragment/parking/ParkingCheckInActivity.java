@@ -3,6 +3,7 @@ package com.graduation.fragment.parking;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
@@ -51,7 +52,7 @@ public class ParkingCheckInActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.checkin);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		ViewUtil.setUpActionBar(this);
 
 		parking_code = getIntent().getStringExtra("parking_code");
 		street_id = getIntent().getIntExtra("f_street_id", 0);
@@ -141,7 +142,6 @@ public class ParkingCheckInActivity extends Activity
 			list.add(car_type);
 			list.add(act_cost);
 			list.add(user_id);
-			list.add(user_id);
 			list.add(car_state);
 			list.add(parking_code);
 			list.add(street_id);
@@ -192,6 +192,7 @@ public class ParkingCheckInActivity extends Activity
 		return DialogUtil.showDialog(this, id);
 	}
 
+	@SuppressLint("NewApi")
 	public boolean onNavigateUp()
 	{
 		finish();

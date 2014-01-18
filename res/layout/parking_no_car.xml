@@ -9,7 +9,7 @@
 
         <ImageView
             android:layout_width="0dp"
-            android:layout_height="75dp"
+            android:layout_height="55dp"
             android:layout_weight="1"
             android:src="@drawable/no_parking" />
 
@@ -17,22 +17,17 @@
             android:id="@+id/f_name"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.5"
+            android:layout_weight="2"
             android:gravity="center_vertical" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.5"
+            android:layout_weight="2"
             android:gravity="center_vertical"
             android:text="空闲" />
 
-        <ImageView
-            android:id="@+id/parking_setting"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/icon1" />
+        
     </LinearLayout>
 
     <LinearLayout

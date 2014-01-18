@@ -7,7 +7,7 @@
     <ImageView
         android:id="@+id/has_car"
         style="@style/parking_has_car_image"
-        android:layout_height="75dp"
+        android:layout_height="55dp"
         android:clickable="true"
         android:focusable="false"
         android:src="@drawable/parking" />
@@ -15,7 +15,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="3"
+        android:layout_weight="4"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -38,14 +38,22 @@
             android:id="@+id/f_parking_stamp"
             style="@style/parking_has_car_text" />
 
-        <TextView
-            android:id="@+id/act_cost"
-            style="@style/parking_has_car_text" />
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
 
-    <ImageView
-        style="@style/parking_has_car_image"
-        android:src="@drawable/icon1" />
+            <TextView
+                android:id="@+id/act_cost"
+                style="@style/parking_has_car_image"
+                android:gravity="center_vertical" />
+
+            <TextView
+                android:id="@+id/f_escape"
+                style="@style/parking_has_car_image"
+                android:gravity="center_vertical" />
+        </LinearLayout>
+    </LinearLayout>
 
     <LinearLayout
         style="@style/item_space_gone"
@@ -87,9 +95,9 @@
             android:id="@+id/f_street_name"
             style="@style/item_space_gone" />
 
-             <TextView
+        <TextView
             android:id="@+id/f_car_state"
-            style="@style/item_space_gone" /> 
+            style="@style/item_space_gone" />
     </LinearLayout>
 
 </LinearLayout>

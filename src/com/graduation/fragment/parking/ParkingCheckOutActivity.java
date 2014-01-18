@@ -3,6 +3,7 @@ package com.graduation.fragment.parking;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
@@ -26,6 +27,7 @@ import com.graduation.parking.R;
 import com.graduation.util.DbUtil;
 import com.graduation.util.DialogUtil;
 import com.graduation.util.TimeUtil;
+import com.graduation.util.ViewUtil;
 
 public class ParkingCheckOutActivity extends Activity
 {
@@ -68,7 +70,7 @@ public class ParkingCheckOutActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.checkout);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		ViewUtil.setUpActionBar(this);
 
 		Intent intent = getIntent();
 		parking_code = intent.getStringExtra("parking_code");
@@ -248,6 +250,7 @@ public class ParkingCheckOutActivity extends Activity
 
 	}
 
+	@SuppressLint("NewApi")
 	public boolean onNavigateUp()
 	{
 		finish();

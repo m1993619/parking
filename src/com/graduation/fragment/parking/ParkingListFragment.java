@@ -2,20 +2,24 @@ package com.graduation.fragment.parking;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager.LayoutParams;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -77,15 +81,18 @@ public class ParkingListFragment extends Fragment
 
 			pla = new ParkingListAdapter(getActivity(), list);
 			listView.setAdapter(pla);
-			listView.setOnItemLongClickListener(new MyListener());
+			listView.setOnItemLongClickListener(new MyLongClickListener());
+			listView.setOnItemClickListener(new MyClickListener());
 
 		}
 
 	}
 
+	@SuppressLint("NewApi")
 	private class SearchListener implements SearchView.OnQueryTextListener
 	{
 
+		@SuppressLint("NewApi")
 		@Override
 		public boolean onQueryTextChange(String newText)
 		{
@@ -128,38 +135,38 @@ public class ParkingListFragment extends Fragment
 
 	}
 
-	private class MyListener implements OnItemLongClickListener
+	private class MyLongClickListener implements OnItemLongClickListener
 	{
 		@Override
 		public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
 		{
 			int f_state = Integer.parseInt((String) ((TextView) arg1.findViewById(R.id.f_state))
 					.getText());
-
-			if (0 == f_state)
-			{
-				HashMap<String, Object> map = getNoCarItem(arg1);
-
-				Intent intent = new Intent(getActivity(), ParkingCheckInActivity.class);
-				intent.putExtra("parking_code", (String) map.get("f_code"));
-				intent.putExtra("f_street_id", (Integer) map.get("f_street_id"));
-				intent.putExtra("f_id", (Integer) map.get("f_id"));
-				startActivity(intent);
-			}
-			else
-			{
-				HashMap<String, Object> map = getHasCarItem(arg1);
-
-				Intent intent = new Intent(getActivity(), ParkingCheckOutActivity.class);
-				intent.putExtra("f_id", (Integer) map.get("f_id"));
-				intent.putExtra("f_key", (String) map.get("f_key"));
-				intent.putExtra("parking_code", (String) map.get("f_code"));
-				intent.putExtra("f_car_no", (String) map.get("f_car_no"));
-				intent.putExtra("f_parking_stamp", (String) map.get("f_parking_stamp"));
-				intent.putExtra("f_street_name", (String) map.get("f_street_name"));
-				intent.putExtra("pre_pay", (String) map.get("pre_pay"));
-				startActivity(intent);
-			}
+			initPopWin(arg1);
+//			if (0 == f_state)
+//			{
+//				HashMap<String, Object> map = getNoCarItem(arg1);
+//
+//				Intent intent = new Intent(getActivity(), ParkingCheckInActivity.class);
+//				intent.putExtra("parking_code", (String) map.get("f_code"));
+//				intent.putExtra("f_street_id", (Integer) map.get("f_street_id"));
+//				intent.putExtra("f_id", (Integer) map.get("f_id"));
+//				startActivity(intent);
+//			}
+//			else
+//			{
+//				HashMap<String, Object> map = getHasCarItem(arg1);
+//
+//				Intent intent = new Intent(getActivity(), ParkingCheckOutActivity.class);
+//				intent.putExtra("f_id", (Integer) map.get("f_id"));
+//				intent.putExtra("f_key", (String) map.get("f_key"));
+//				intent.putExtra("parking_code", (String) map.get("f_code"));
+//				intent.putExtra("f_car_no", (String) map.get("f_car_no"));
+//				intent.putExtra("f_parking_stamp", (String) map.get("f_parking_stamp"));
+//				intent.putExtra("f_street_name", (String) map.get("f_street_name"));
+//				intent.putExtra("pre_pay", (String) map.get("pre_pay"));
+//				startActivity(intent);
+//			}
 			return true;
 		}
 
@@ -204,5 +211,33 @@ public class ParkingListFragment extends Fragment
 			return map;
 
 		}
+
+	}
+
+	private void initPopWin(View view)
+	{
+
+		View menu = getLayoutInflater(new Bundle()).inflate(R.layout.menu_has_car, null);
+		@SuppressWarnings("deprecation")
+		PopupWindow popupWindow = new PopupWindow(menu, LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
+		popupWindow.setFocusable(true);
+
+		popupWindow.setOutsideTouchable(true);
+
+		popupWindow.setBackgroundDrawable(new BitmapDrawable());
+
+		popupWindow.showAsDropDown(view);
+	}
+
+	private class MyClickListener implements OnItemClickListener
+	{
+
+		@Override
+		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
+		{
+			// TODO Auto-generated method stub
+			initPopWin(arg1);
+		}
+
 	}
 }

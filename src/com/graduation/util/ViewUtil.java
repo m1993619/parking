@@ -2,6 +2,11 @@ package com.graduation.util;
 
 import java.util.Arrays;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.app.ActionBar;
+import android.app.Activity;
+import android.os.Build;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -131,7 +136,7 @@ public class ViewUtil
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3)
 			{
-				context.car_type =CAR_TYPE[arg2];
+				context.car_type = CAR_TYPE[arg2];
 			}
 
 			@Override
@@ -156,7 +161,7 @@ public class ViewUtil
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3)
 			{
-				context.car_type =CAR_TYPE[arg2];
+				context.car_type = CAR_TYPE[arg2];
 			}
 
 			@Override
@@ -180,7 +185,7 @@ public class ViewUtil
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3)
 			{
-				context.car_state =CAR_STATE[arg2];
+				context.car_state = CAR_STATE[arg2];
 			}
 
 			@Override
@@ -192,7 +197,8 @@ public class ViewUtil
 		return sp;
 	}
 
-	public static Spinner getCarStateSp(final ParkingCheckInEditActivity parkingCheckInEditActivity, String car_state)
+	public static Spinner getCarStateSp(final ParkingCheckInEditActivity parkingCheckInEditActivity,
+			String car_state)
 	{
 		Spinner sp = (Spinner) parkingCheckInEditActivity.findViewById(R.id.car_state);
 
@@ -207,7 +213,7 @@ public class ViewUtil
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3)
 			{
-				parkingCheckInEditActivity.car_state =CAR_STATE[arg2];
+				parkingCheckInEditActivity.car_state = CAR_STATE[arg2];
 			}
 
 			@Override
@@ -226,12 +232,12 @@ public class ViewUtil
 				ACT_COST);
 		ada.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		sp.setAdapter(ada);
-		
+
 		sp.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3)
 			{
-				context.act_cost =ACT_COST[arg2];
+				context.act_cost = ACT_COST[arg2];
 			}
 
 			@Override
@@ -239,11 +245,12 @@ public class ViewUtil
 			{
 			}
 		});
-		
+
 		return sp;
 	}
 
-	public static Spinner getActCostSp(final ParkingCheckInEditActivity parkingCheckInEditActivity, Double car_type)
+	public static Spinner getActCostSp(final ParkingCheckInEditActivity parkingCheckInEditActivity,
+			Double car_type)
 	{
 		Spinner sp = (Spinner) parkingCheckInEditActivity.findViewById(R.id.act_cost);
 
@@ -254,12 +261,12 @@ public class ViewUtil
 
 		int position = Arrays.asList(ACT_COST).indexOf(car_type);
 		sp.setSelection(position);
-		
+
 		sp.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3)
 			{
-				parkingCheckInEditActivity.act_cost =ACT_COST[arg2];
+				parkingCheckInEditActivity.act_cost = ACT_COST[arg2];
 			}
 
 			@Override
@@ -270,4 +277,20 @@ public class ViewUtil
 
 		return sp;
 	}
+
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	@SuppressLint("NewApi")
+	public static void setUpActionBar(Activity activity)
+	{
+		System.out.println("SDFGSDFGSDFGSDFGSDFGSDF");
+		if (Build.VERSION.SDK_INT >= 11)
+		{
+
+			ActionBar actionBar = activity.getActionBar();
+			actionBar.setDisplayHomeAsUpEnabled(true);
+		}
+		System.out.println("sadfasdfasdfasdfasdfasdf");
+
+	}
+
 }

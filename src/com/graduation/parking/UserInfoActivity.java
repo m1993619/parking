@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.graduation.util.DbUtil;
 import com.graduation.util.DialogUtil;
+import com.graduation.util.ViewUtil;
 
 @SuppressLint("CommitPrefEdits")
 public class UserInfoActivity extends Activity
@@ -38,7 +39,7 @@ public class UserInfoActivity extends Activity
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.user_info);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		ViewUtil.setUpActionBar(this);
 
 		button = (Button) findViewById(R.id.up_user_info);
 
@@ -166,6 +167,7 @@ public class UserInfoActivity extends Activity
 		return super.onOptionsItemSelected(item);
 	}
 
+	@SuppressLint("NewApi")
 	public boolean onNavigateUp()
 	{
 		finish();

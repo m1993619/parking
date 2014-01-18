@@ -16,7 +16,7 @@ import com.gratuation.model.User;
 public class DbUtil
 {
 
-	private static final String URL = "jdbc:postgresql://192.168.1.104:5432/parking";
+	private static final String URL = "jdbc:postgresql://m1993619.xicp.net:5432/parking";
 	private static final String DB_USERNAME = "parking";
 	private static final String DB_PASSWORD = "parking";
 
@@ -105,7 +105,7 @@ public class DbUtil
 	{
 		int i = 0;
 
-		String sql1 = "insert into t_parking_record (f_key,f_car_no,f_car_type,f_act_cost,f_creater_id,f_charger_id,f_car_state,f_parking_code,f_street_id,f_shift_id,f_parking_stamp) values (?,?,?,?,?,?,?,?,?,?,?)";
+		String sql1 = "insert into t_parking_record (f_key,f_car_no,f_car_type,f_act_cost,f_creater_id,f_car_state,f_parking_code,f_street_id,f_shift_id,f_parking_stamp) values (?,?,?,?,?,?,?,?,?,?)";
 		String sql2 = "update t_parking set f_state = 1,f_key = ? where f_id = ?";
 		PreparedStatement ps1 = getPStatement(sql1);
 
@@ -118,15 +118,14 @@ public class DbUtil
 			ps1.setString(3, (String) list.get(2));
 			ps1.setDouble(4, (Double) list.get(3));
 			ps1.setInt(5, (Integer) list.get(4));
-			ps1.setInt(6, (Integer) list.get(5));
+			ps1.setString(6, (String) list.get(5));
 			ps1.setString(7, (String) list.get(6));
-			ps1.setString(8, (String) list.get(7));
+			ps1.setInt(8, (Integer) list.get(7));
 			ps1.setInt(9, (Integer) list.get(8));
-			ps1.setInt(10, (Integer) list.get(9));
-			ps1.setTimestamp(11, (Timestamp) list.get(10));
+			ps1.setTimestamp(10, (Timestamp) list.get(9));
 
 			ps2.setString(1, (String) list.get(0));
-			ps2.setInt(2, (Integer) list.get(11));
+			ps2.setInt(2, (Integer) list.get(10));
 
 			i = ps1.executeUpdate();
 			ps2.executeUpdate();
@@ -239,14 +238,7 @@ public class DbUtil
 	public static ArrayList<HashMap<String, Object>> getParkingList(int id)
 	{
 		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
-		String sql = "	select p.f_id,p.f_code,p.f_name,p.f_street_id,p.f_type,p.f_state,"
-				+ "p.f_is_free,p.f_key,rd.f_car_type,rd.f_parking_stamp,"
-				+ "rd.f_car_no,s.f_name as f_street_name,rd.f_act_cost,rd.f_car_state from t_parking p "
-				+ "left join t_parking_record rd on rd.f_key = p.f_key "
-				+ "left join t_street s on p.f_street_id = s.f_id "
-				+ "left join t_parking_image tpi on tpi.f_key = rd.f_key "
-				+ "left join t_user_parking tup on tup.f_parking_id = p.f_id "
-				+ "where tup.f_user_id = ? order by p.f_id";
+		String sql = "select p.f_id,p.f_code,p.f_name,p.f_street_id,p.f_type,p.f_state,p.f_is_free,p.f_key,rd.f_car_type,rd.f_parking_stamp,rd.f_car_no,s.f_name as f_street_name,rd.f_act_cost,rd.f_car_state, (select count(*) from t_parking_record where f_car_no =rd.f_car_no and f_cost_type='车辆逃逸' and f_escape_state = 0)as f_escape_count from t_parking p left join t_parking_record rd on rd.f_key = p.f_key left join t_street s on p.f_street_id = s.f_id left join t_parking_image tpi on tpi.f_key = rd.f_key left join t_user_parking tup on tup.f_parking_id = p.f_id where tup.f_user_id = ? order by p.f_id";
 		PreparedStatement ps = getPStatement(sql);
 
 		try
@@ -271,6 +263,7 @@ public class DbUtil
 				map.put("f_street_name", rs.getString(12));
 				map.put("f_act_cost", rs.getDouble(13));
 				map.put("f_car_state", rs.getString(14));
+				map.put("f_escape_count", rs.getInt(15));
 
 				list.add(map);
 			}
@@ -281,6 +274,55 @@ public class DbUtil
 			e.printStackTrace();
 		}
 
+		return list;
+
+	}
+
+	public static ArrayList<HashMap<String, Object>> getEscapeRecord(String car_no)
+	{
+		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
+		String sql = " select*,(select f_name from t_street  where f_id = tpr.f_street_id ) as f_street_name ,round(abs(extract(epoch from f_leave_stamp - f_parking_stamp)/60)::numeric,0) || '分钟' as f_range_stamp  from t_parking_record tpr where f_cost_type = '车辆逃逸'and f_car_no= ? order by f_escape_state";
+		PreparedStatement ps = getPStatement(sql);
+
+		try
+		{
+			ps.setString(1, car_no);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next())
+			{
+				HashMap<String, Object> map = new HashMap<String, Object>();
+
+				map.put("f_id", rs.getInt(1));
+				map.put("f_key", rs.getString(2));
+				map.put("f_car_no", rs.getString(3));
+				map.put("f_car_type", rs.getString(4));
+				map.put("f_leave_stamp", rs.getTimestamp(5));
+				map.put("f_cost", rs.getDouble(6));
+				map.put("f_act_cost", rs.getDouble(7));
+				map.put("f_cost_type", rs.getString(8));
+				map.put("f_reason", rs.getString(9));
+				map.put("f_shift_id", rs.getInt(10));
+				map.put("f_coster_id", rs.getInt(11));
+				map.put("f_creater_id", rs.getInt(12));
+				map.put("f_parking_code", rs.getString(13));
+				map.put("f_parking_stamp", rs.getTimestamp(14));
+				map.put("f_car_state", rs.getString(15));
+				map.put("f_street_id", rs.getInt(16));
+				map.put("f_escape_state", rs.getInt(17));
+				map.put("f_street_name", rs.getInt(18));
+				map.put("f_range_stamp", rs.getInt(19));
+				list.add(map);
+			}
+		}
+		catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+		
+		
 		return list;
 
 	}

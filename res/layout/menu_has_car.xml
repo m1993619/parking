@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:gravity="center" 
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:id="@+id/edit_view"
+            style="@style/menu_item" >
+
+            <ImageButton
+                style="@style/menu_img"
+                android:src="@android:drawable/ic_menu_edit" />
+
+            <TextView
+                style="@style/menu_text"
+                android:text="修 改" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/delete_view"
+            style="@style/menu_item"
+            android:layout_toRightOf="@id/edit_view" >
+
+            <ImageButton
+                style="@style/menu_img"
+                android:src="@android:drawable/ic_menu_delete" />
+
+            <TextView
+                style="@style/menu_text"
+                android:text="删 除" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/checkout_view"
+            style="@style/menu_item"
+            android:layout_toRightOf="@id/delete_view" >
+
+            <ImageButton
+                style="@style/menu_img"
+                android:src="@android:drawable/ic_menu_agenda" />
+
+            <TextView
+                style="@style/menu_text"
+                android:text="缴 费" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/search_escape_view"
+            style="@style/menu_item"
+            android:layout_toRightOf="@id/checkout_view" >
+
+            <ImageButton
+                style="@style/menu_img"
+                android:src="@android:drawable/ic_menu_info_details" />
+
+            <TextView
+                style="@style/menu_text"
+                android:text="逃 逸" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

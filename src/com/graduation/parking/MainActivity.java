@@ -1,11 +1,14 @@
 package com.graduation.parking;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
@@ -21,7 +24,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.graduation.fragment.parking.ParkingListFragment;
+import com.graduation.util.ViewUtil;
 
+@SuppressLint("NewApi")
 public class MainActivity extends FragmentActivity
 {
 	private SharedPreferences sp;
@@ -61,32 +66,41 @@ public class MainActivity extends FragmentActivity
 
 		// enable ActionBar app icon to behave as action to toggle nav
 		// drawer
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setHomeButtonEnabled(true);
+		ViewUtil.setUpActionBar(this);
 
 		// ActionBarDrawerToggle ties together the the proper interactions
 		// between the sliding drawer and the action bar app icon
-		mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
-		mDrawerLayout, /* DrawerLayout object */
-		R.drawable.ic_drawer, /* nav drawer image to replace 'Up' caret */
-		R.string.drawer_open, /* "open drawer" description for accessibility */
-		R.string.drawer_close /* "close drawer" description for accessibility */
-		) {
-			public void onDrawerClosed(View view)
-			{
-				getActionBar().setTitle(mTitle);
-				invalidateOptionsMenu(); // creates call to
-							// onPrepareOptionsMenu()
-			}
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+		{
+			mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
+			mDrawerLayout, /* DrawerLayout object */
+			R.drawable.ic_drawer, /* nav drawer image to replace 'Up' caret */
+			R.string.drawer_open, /* "open drawer" description for accessibility */
+			R.string.drawer_close /* "close drawer" description for accessibility */
+			) {
+				@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+				@SuppressLint("NewApi")
+				public void onDrawerClosed(View view)
+				{
 
-			public void onDrawerOpened(View drawerView)
-			{
-				getActionBar().setTitle(mDrawerTitle);
-				invalidateOptionsMenu(); // creates call to
-							// onPrepareOptionsMenu()
-			}
-		};
-		mDrawerLayout.setDrawerListener(mDrawerToggle);
+					getActionBar().setTitle(mTitle);
+					invalidateOptionsMenu(); // creates call to
+
+					// onPrepareOptionsMenu()
+				}
+
+				public void onDrawerOpened(View drawerView)
+				{
+
+					getActionBar().setTitle(mDrawerTitle);
+					invalidateOptionsMenu(); // creates call to
+								// onPrepareOptionsMenu()
+
+				}
+			};
+			mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+		}
 
 		if (savedInstanceState == null)
 		{
@@ -128,10 +142,14 @@ public class MainActivity extends FragmentActivity
 	{
 		// The action bar home/up action should open or close the drawer.
 		// ActionBarDrawerToggle will take care of this.
-		if (mDrawerToggle.onOptionsItemSelected(item))
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
 		{
-			return true;
+			if (mDrawerToggle.onOptionsItemSelected(item))
+			{
+				return true;
+			}
 		}
+
 		// Handle action buttons
 		switch (item.getItemId())
 		{
@@ -181,7 +199,11 @@ public class MainActivity extends FragmentActivity
 	public void setTitle(CharSequence title)
 	{
 		mTitle = title;
-		getActionBar().setTitle(mTitle);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+		{
+			getActionBar().setTitle(mTitle);
+		}
+
 	}
 
 	/**
@@ -194,7 +216,10 @@ public class MainActivity extends FragmentActivity
 	{
 		super.onPostCreate(savedInstanceState);
 		// Sync the toggle state after onRestoreInstanceState has occurred.
-		mDrawerToggle.syncState();
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+		{
+			mDrawerToggle.syncState();
+		}
 	}
 
 	@Override
@@ -202,7 +227,10 @@ public class MainActivity extends FragmentActivity
 	{
 		super.onConfigurationChanged(newConfig);
 		// Pass any configuration change to the drawer toggls
-		mDrawerToggle.onConfigurationChanged(newConfig);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+		{
+			mDrawerToggle.onConfigurationChanged(newConfig);
+		}
 	}
 
 	public boolean onKeyDown(int keyCode, KeyEvent event)

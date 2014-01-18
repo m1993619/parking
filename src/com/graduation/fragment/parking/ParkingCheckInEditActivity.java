@@ -2,6 +2,7 @@ package com.graduation.fragment.parking;
 
 import java.util.ArrayList;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -61,7 +62,7 @@ public class ParkingCheckInEditActivity extends Activity
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.checkin_edit);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		ViewUtil.setUpActionBar(this);
 
 		SharedPreferences sp = getSharedPreferences("user", MODE_PRIVATE);
 		f_street_id = sp.getInt("f_street_id", 0);
@@ -230,6 +231,7 @@ public class ParkingCheckInEditActivity extends Activity
 		return DialogUtil.showDialog(this, id);
 	}
 
+	@SuppressLint("NewApi")
 	@Override
 	public boolean onNavigateUp()
 	{
