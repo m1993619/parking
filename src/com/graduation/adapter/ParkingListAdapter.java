@@ -52,7 +52,7 @@ public class ParkingListAdapter extends BaseAdapter
 		return position;
 	}
 
-	private ArrayList<String> getCode()
+	public ArrayList<String> getCode()
 	{
 		ArrayList<String> code = new ArrayList<String>();
 		for (HashMap map : list)
@@ -62,7 +62,7 @@ public class ParkingListAdapter extends BaseAdapter
 		return code;
 	}
 
-	private ArrayList<String> getHasCar()
+	public ArrayList<String> getHasCar()
 	{
 		ArrayList<String> hasCar = new ArrayList<String>();
 		for (HashMap map : list)

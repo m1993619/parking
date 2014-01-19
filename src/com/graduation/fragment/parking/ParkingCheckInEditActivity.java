@@ -164,7 +164,7 @@ public class ParkingCheckInEditActivity extends Activity
 
 	}
 
-	private class CheckInEditTask extends AsyncTask<Integer, Void, Boolean>
+	protected class CheckInEditTask extends AsyncTask<Integer, Void, Boolean>
 	{
 
 		@Override

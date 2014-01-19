@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -24,6 +25,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.graduation.fragment.parking.ParkingListFragment;
+import com.graduation.util.DialogUtil;
 import com.graduation.util.ViewUtil;
 
 @SuppressLint("NewApi")
@@ -265,5 +267,11 @@ public class MainActivity extends FragmentActivity
 		{
 			return super.onKeyDown(keyCode, event);
 		}
+	}
+
+	protected Dialog onCreateDialog(int id)
+	{
+		// TODO Auto-generated method stub
+		return DialogUtil.showDialog(this, id);
 	}
 }
