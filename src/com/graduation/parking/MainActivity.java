@@ -2,7 +2,6 @@ package com.graduation.parking;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -12,7 +11,9 @@ import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.KeyEvent;
@@ -195,6 +196,12 @@ public class MainActivity extends FragmentActivity
 		mDrawerList.setItemChecked(position, true);
 		setTitle(mPlanetTitles[position]);
 		mDrawerLayout.closeDrawer(mDrawerList);
+	}
+
+	public void switchContent(Fragment fragment)
+	{
+		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+		transaction.replace(R.id.content_frame, fragment).commit();
 	}
 
 	@Override

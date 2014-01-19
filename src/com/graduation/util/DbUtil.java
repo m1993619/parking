@@ -281,7 +281,7 @@ public class DbUtil
 	public static ArrayList<HashMap<String, Object>> getEscapeRecord(String car_no)
 	{
 		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
-		String sql = " select*,(select f_name from t_street  where f_id = tpr.f_street_id ) as f_street_name ,round(abs(extract(epoch from f_leave_stamp - f_parking_stamp)/60)::numeric,0) || '分钟' as f_range_stamp  from t_parking_record tpr where f_cost_type = '车辆逃逸'and f_car_no= ? order by f_escape_state";
+		String sql = " select*,(select f_name from t_street  where f_id = tpr.f_street_id ) as f_street_name ,round(abs(extract(epoch from f_leave_stamp - f_parking_stamp)/60)::numeric,0) || '分钟' as f_range_stamp ,(select f_name from t_user  where f_id = tpr.f_coster_id ) as f_coster_name ,(select f_name from t_user  where f_id = tpr.f_creater_id ) as f_creater_name  from t_parking_record tpr where f_cost_type = '车辆逃逸'and f_car_no= ? order by f_escape_state";
 		PreparedStatement ps = getPStatement(sql);
 
 		try
@@ -309,8 +309,10 @@ public class DbUtil
 				map.put("f_car_state", rs.getString(15));
 				map.put("f_street_id", rs.getInt(16));
 				map.put("f_escape_state", rs.getInt(17));
-				map.put("f_street_name", rs.getInt(18));
-				map.put("f_range_stamp", rs.getInt(19));
+				map.put("f_street_name", rs.getString(18));
+				map.put("f_range_stamp", rs.getString(19));
+				map.put("f_coster_name", rs.getString(20));
+				map.put("f_creater_name", rs.getString(21));
 				list.add(map);
 			}
 		}
@@ -320,9 +322,6 @@ public class DbUtil
 			e.printStackTrace();
 		}
 
-		
-		
-		
 		return list;
 
 	}

@@ -114,28 +114,28 @@ public class ParkingListAdapter extends BaseAdapter
 
 			view = View.inflate(context, R.layout.pakring_has_car, null);
 
-			ImageView button = (ImageView) view.findViewById(R.id.has_car);
-			button.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v)
-				{
-					// TODO Auto-generated method stub
-
-					Intent intent = new Intent(context, ParkingCheckInEditActivity.class);
-					intent.putExtra("f_car_no", f_car_no);
-					intent.putExtra("f_code", f_code);
-					intent.putExtra("f_car_type", f_car_type);
-					intent.putExtra("f_car_state", f_car_state);
-					intent.putExtra("f_act_cost", f_act_cost);
-					intent.putExtra("f_key", f_key);
-					intent.putExtra("f_id", f_id);
-					intent.putStringArrayListExtra("code_list", getCode());
-					intent.putStringArrayListExtra("hasCar", getHasCar());
-					context.startActivity(intent);
-
-				}
-			});
+//			ImageView button = (ImageView) view.findViewById(R.id.has_car);
+//			button.setOnClickListener(new OnClickListener() {
+//
+//				@Override
+//				public void onClick(View v)
+//				{
+//					// TODO Auto-generated method stub
+//
+//					Intent intent = new Intent(context, ParkingCheckInEditActivity.class);
+//					intent.putExtra("f_car_no", f_car_no);
+//					intent.putExtra("f_code", f_code);
+//					intent.putExtra("f_car_type", f_car_type);
+//					intent.putExtra("f_car_state", f_car_state);
+//					intent.putExtra("f_act_cost", f_act_cost);
+//					intent.putExtra("f_key", f_key);
+//					intent.putExtra("f_id", f_id);
+//					intent.putStringArrayListExtra("code_list", getCode());
+//					intent.putStringArrayListExtra("hasCar", getHasCar());
+//					context.startActivity(intent);
+//
+//				}
+//			});
 
 			((TextView) view.findViewById(R.id.f_name)).setText(f_name);
 			((TextView) view.findViewById(R.id.f_id)).setText(Integer.toString(f_id));

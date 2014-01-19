@@ -54,4 +54,41 @@
         </LinearLayout>
     </LinearLayout>
 
+    <LinearLayout
+        style="@style/item_space_gone"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/f_id"
+            style="@style/item_space_gone" />
+
+        <TextView
+            android:id="@+id/f_car_type"
+            style="@style/item_space_gone" />
+
+        <TextView
+            android:id="@+id/f_leave_stamp"
+            style="@style/item_space_gone" />
+
+        <TextView
+            android:id="@+id/f_act_cost"
+            style="@style/item_space_gone" />
+
+        <TextView
+            android:id="@+id/f_car_state"
+            style="@style/item_space_gone" />
+
+        <TextView
+            android:id="@+id/f_escape_state"
+            style="@style/item_space_gone" />
+
+        <TextView
+            android:id="@+id/f_coster_name"
+            style="@style/item_space_gone" />
+
+        <TextView
+            android:id="@+id/f_creater_name"
+            style="@style/item_space_gone" />
+    </LinearLayout>
+
 </LinearLayout>

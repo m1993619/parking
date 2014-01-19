@@ -29,6 +29,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.graduation.adapter.ParkingListAdapter;
+import com.graduation.fragment.escape.EscapeRecordFragment;
+import com.graduation.parking.MainActivity;
 import com.graduation.parking.R;
 import com.graduation.util.DbUtil;
 import com.graduation.util.DialogUtil;
@@ -231,7 +233,7 @@ public class ParkingListFragment<popupWindow> extends Fragment
 			}
 		});
 		menu.findViewById(R.id.escape).setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v)
 			{
@@ -295,12 +297,19 @@ public class ParkingListFragment<popupWindow> extends Fragment
 		intent.putExtra("pre_pay", (String) map.get("pre_pay"));
 		startActivity(intent);
 	}
-	
+
 	private void escape(View view)
 	{
-		String f_car_no  = (String) ((TextView) view.findViewById(R.id.f_car_no)).getText();
+		String f_car_no = (String) ((TextView) view.findViewById(R.id.f_car_no)).getText();
+		Bundle bundle = new Bundle();
+		bundle.putString("f_car_no", f_car_no);
+
+		EscapeRecordFragment fragment = new EscapeRecordFragment();
+		fragment.setArguments(bundle);
+		MainActivity activity = (MainActivity) getActivity();
+		activity.switchContent(fragment);
 	}
-	
+
 	private class DeleteRecordTask extends AsyncTask<String, Void, Boolean>
 	{
 
