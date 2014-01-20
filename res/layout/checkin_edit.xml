@@ -132,7 +132,8 @@
             android:id="@+id/save"
             style="@style/check_row"
             android:layout_marginTop="16dp"
-            android:text="保存" />
+            android:text="保存" 
+            android:background="@drawable/button"/>
     </LinearLayout>
 
 </ScrollView>

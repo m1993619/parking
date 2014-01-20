@@ -3,8 +3,8 @@
 
     <item
         android:id="@+id/delete_record"
-        android:showAsAction="ifRoom"
-        android:icon="@drawable/delete"
+        android:showAsAction="always"
+        android:icon="@android:drawable/ic_menu_delete"
         android:title="删除"/>
 
 </menu>

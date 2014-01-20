@@ -24,7 +24,7 @@ public class EscapeRecordFragment extends Fragment
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		return inflater.inflate(R.layout.escape_record, container, false);
+		return inflater.inflate(R.layout.escape_record_activity, container, false);
 	}
 
 	@Override

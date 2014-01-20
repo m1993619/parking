@@ -7,7 +7,7 @@
         android:title="@string/logout"/>
     <item
         android:id="@+id/user_infomation"
-        android:icon="@drawable/info"
+        android:icon="@drawable/ic_menu_allfriends"
         android:showAsAction="always"
         android:title="@string/user_infomation"/>
     <item

@@ -157,8 +157,9 @@
         <Button
             android:id="@+id/pay"
             style="@style/check_row"
-            android:layout_marginTop="8dp"
-            android:text="结帐" />
+            android:layout_marginTop="16dp"
+            android:text="结帐" 
+            android:background="@drawable/button"/>
     </LinearLayout>
 
 </RelativeLayout>

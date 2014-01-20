@@ -9,7 +9,6 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import com.gratuation.model.User;
 
@@ -226,6 +225,37 @@ public class DbUtil
 			pSta.setInt(3, id);
 
 			i = pSta.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+
+		return i;
+	}
+
+	public static int escapePay(ArrayList<Object> list)
+	{
+		int i = 0;
+		String sql1 = "insert into t_escape_pay_record (f_parking_record_id,f_parking_name,f_pay_type,f_act_pay,f_pay_stamp,f_user_id )values (?,?,?,?,?,?)";
+		String sql2 = "update t_parking_record set f_escape_state = 1 where f_id = ?";
+
+		PreparedStatement pSta1 = getPStatement(sql1);
+		PreparedStatement pSta2 = getPStatement(sql2);
+
+		try
+		{
+			pSta1.setInt(1, (Integer) list.get(0));
+			pSta1.setString(2, (String) list.get(1));
+			pSta1.setString(3, (String) list.get(2));
+			pSta1.setDouble(4, (Double) list.get(3));
+			pSta1.setTimestamp(5, (Timestamp) list.get(4));
+			pSta1.setInt(6, (Integer) list.get(5));
+
+			pSta2.setInt(1, (Integer) list.get(0));
+
+			i = pSta1.executeUpdate();
+			pSta2.executeUpdate();
 		}
 		catch (SQLException e)
 		{

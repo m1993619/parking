@@ -4,7 +4,7 @@
 <item android:id="@+id/user_info_edit"
     			android:title="编辑"
     			android:showAsAction="always"
-    			android:icon="@drawable/ic_launcher"></item>
+    			android:icon="@android:drawable/ic_menu_edit"></item>
     
     
     </menu>

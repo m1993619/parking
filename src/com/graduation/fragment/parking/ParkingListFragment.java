@@ -29,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.graduation.adapter.ParkingListAdapter;
+import com.graduation.fragment.escape.EscapeRecordActivity;
 import com.graduation.fragment.escape.EscapeRecordFragment;
 import com.graduation.parking.MainActivity;
 import com.graduation.parking.R;
@@ -185,7 +186,7 @@ public class ParkingListFragment<popupWindow> extends Fragment
 				// intent.putExtra("f_street_name", (String) map.get("f_street_name"));
 				// intent.putExtra("pre_pay", (String) map.get("pre_pay"));
 				// startActivity(intent);
-				initPopWin(arg1);
+
 			}
 			return true;
 		}
@@ -301,13 +302,18 @@ public class ParkingListFragment<popupWindow> extends Fragment
 	private void escape(View view)
 	{
 		String f_car_no = (String) ((TextView) view.findViewById(R.id.f_car_no)).getText();
-		Bundle bundle = new Bundle();
-		bundle.putString("f_car_no", f_car_no);
+		// Bundle bundle = new Bundle();
+		// bundle.putString("f_car_no", f_car_no);
 
-		EscapeRecordFragment fragment = new EscapeRecordFragment();
-		fragment.setArguments(bundle);
-		MainActivity activity = (MainActivity) getActivity();
-		activity.switchContent(fragment);
+		// EscapeRecordFragment fragment = new EscapeRecordFragment();
+		// fragment.setArguments(bundle);
+		// MainActivity activity = (MainActivity) getActivity();
+		// activity.switchContent(fragment);
+
+		Intent intent = new Intent(getActivity(), EscapeRecordActivity.class);
+		intent.putExtra("f_car_no", f_car_no);
+		startActivity(intent);
+
 	}
 
 	private class DeleteRecordTask extends AsyncTask<String, Void, Boolean>
@@ -354,8 +360,34 @@ public class ParkingListFragment<popupWindow> extends Fragment
 		@Override
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
 		{
-			// TODO Auto-generated method stub
-			// initPopWin(arg1);
+			int f_state = Integer.parseInt((String) ((TextView) arg1.findViewById(R.id.f_state))
+					.getText());
+
+			if (0 == f_state)
+			{
+				// HashMap<String, Object> map = getNoCarItem(arg1);
+				//
+				// Intent intent = new Intent(getActivity(), ParkingCheckInActivity.class);
+				// intent.putExtra("parking_code", (String) map.get("f_code"));
+				// intent.putExtra("f_street_id", (Integer) map.get("f_street_id"));
+				// intent.putExtra("f_id", (Integer) map.get("f_id"));
+				// startActivity(intent);
+			}
+			else
+			{
+				// HashMap<String, Object> map = getHasCarItem(arg1);
+				//
+				// Intent intent = new Intent(getActivity(), ParkingCheckOutActivity.class);
+				// intent.putExtra("f_id", (Integer) map.get("f_id"));
+				// intent.putExtra("f_key", (String) map.get("f_key"));
+				// intent.putExtra("parking_code", (String) map.get("f_code"));
+				// intent.putExtra("f_car_no", (String) map.get("f_car_no"));
+				// intent.putExtra("f_parking_stamp", (String) map.get("f_parking_stamp"));
+				// intent.putExtra("f_street_name", (String) map.get("f_street_name"));
+				// intent.putExtra("pre_pay", (String) map.get("pre_pay"));
+				// startActivity(intent);
+				initPopWin(arg1);
+			}
 		}
 
 	}
