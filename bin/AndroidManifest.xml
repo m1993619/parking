@@ -62,6 +62,10 @@
             android:name="com.graduation.fragment.escape.EscapeDetailActivity"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name="com.graduation.parking.LoadingActivity"
+            android:label="@string/app_name" >
+        </activity>
     </application>
 
 </manifest>

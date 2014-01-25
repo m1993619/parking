@@ -105,10 +105,6 @@ public class MainActivity extends FragmentActivity
 
 		}
 
-		if (savedInstanceState == null)
-		{
-			selectItem(0);
-		}
 	}
 
 	@Override
@@ -119,9 +115,9 @@ public class MainActivity extends FragmentActivity
 		Intent intent = getIntent();
 		String state = intent.getStringExtra("state");
 		if ("check".equals(state))
-		{
 			selectItem(0);
-		}
+		else
+			selectItem(0);
 
 	}
 

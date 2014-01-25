@@ -311,7 +311,7 @@ public class DbUtil
 	public static ArrayList<HashMap<String, Object>> getEscapeRecord(String car_no)
 	{
 		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
-		String sql = " select*,(select f_name from t_street  where f_id = tpr.f_street_id ) as f_street_name ,round(abs(extract(epoch from f_leave_stamp - f_parking_stamp)/60)::numeric,0) || '分钟' as f_range_stamp ,(select f_name from t_user  where f_id = tpr.f_coster_id ) as f_coster_name ,(select f_name from t_user  where f_id = tpr.f_creater_id ) as f_creater_name  from t_parking_record tpr where f_cost_type = '车辆逃逸'and f_car_no= ? order by f_escape_state";
+		String sql = " select tpr.*,(select f_name from t_street  where f_id = tpr.f_street_id ) as f_street_name ,round(abs(extract(epoch from f_leave_stamp - f_parking_stamp)/60)::numeric,0) || '分钟' as f_range_stamp ,(select f_name from t_user  where f_id = tpr.f_coster_id ) as f_coster_name ,(select f_name from t_user  where f_id = tpr.f_creater_id ) as f_creater_name ,epr.f_act_pay as act_pay,epr.f_pay_stamp as pay_stamp ,(select f_name from t_user  where f_id = epr.f_user_id ) as user_name  from t_parking_record tpr left join t_escape_pay_record epr on tpr.f_id = epr.f_parking_record_id where f_cost_type = '车辆逃逸'and f_car_no= ? order by f_escape_state";
 		PreparedStatement ps = getPStatement(sql);
 
 		try
@@ -343,6 +343,9 @@ public class DbUtil
 				map.put("f_range_stamp", rs.getString(19));
 				map.put("f_coster_name", rs.getString(20));
 				map.put("f_creater_name", rs.getString(21));
+				map.put("act_pay", rs.getDouble(22));
+				map.put("pay_stamp", rs.getTimestamp(23));
+				map.put("user_name", rs.getString(24));
 				list.add(map);
 			}
 		}

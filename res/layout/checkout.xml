@@ -2,14 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    android:layout_marginTop="24dp" >
+    android:background="#eee" >
 
     <LinearLayout
         android:id="@+id/form"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="24dp"
         android:orientation="vertical" >
 
         <TextView
@@ -158,8 +159,8 @@
             android:id="@+id/pay"
             style="@style/check_row"
             android:layout_marginTop="16dp"
-            android:text="结帐" 
-            android:background="@drawable/button"/>
+            android:background="@drawable/btn_style_green"
+            android:text="结帐" />
     </LinearLayout>
 
 </RelativeLayout>

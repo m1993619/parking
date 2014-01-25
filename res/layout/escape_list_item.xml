@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#eee"
     android:orientation="horizontal" >
 
     <ImageView
@@ -88,6 +89,18 @@
 
         <TextView
             android:id="@+id/f_creater_name"
+            style="@style/item_space_gone" />
+
+        <TextView
+            android:id="@+id/act_pay"
+            style="@style/item_space_gone" />
+
+        <TextView
+            android:id="@+id/pay_stamp"
+            style="@style/item_space_gone" />
+
+        <TextView
+            android:id="@+id/user_name"
             style="@style/item_space_gone" />
     </LinearLayout>
 

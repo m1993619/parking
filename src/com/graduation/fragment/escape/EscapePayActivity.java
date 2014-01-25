@@ -151,9 +151,9 @@ public class EscapePayActivity extends Activity
 
 			if (result)
 			{
-				Intent intent = new Intent(EscapePayActivity.this, EscapeRecordActivity.class);
-				intent.putExtra("f_car_no", car_no);
-				startActivity(intent);
+//				Intent intent = new Intent(EscapePayActivity.this, EscapeRecordActivity.class);
+//				intent.putExtra("f_car_no", car_no);
+//				startActivity(intent);
 				Toast.makeText(EscapePayActivity.this, "update success!", Toast.LENGTH_LONG)
 						.show();
 				finish();

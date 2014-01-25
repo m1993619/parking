@@ -26,6 +26,7 @@ public class EscapeRecordActivity extends Activity
 	private ListView listView;
 	private ArrayList<HashMap<String, Object>> list;
 	private TextView title;
+	private String f_car_no;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -36,13 +37,19 @@ public class EscapeRecordActivity extends Activity
 
 		listView = (ListView) findViewById(R.id.escapelist);
 
-		String f_car_no = getIntent().getStringExtra("f_car_no");
+		f_car_no = getIntent().getStringExtra("f_car_no");
 
 		title = (TextView) findViewById(R.id.title);
 		title.setText(f_car_no + " 的逃逸记录");
 
-		new ShowListTask().execute(f_car_no);
+	}
 
+	@Override
+	protected void onResume()
+	{
+		// TODO Auto-generated method stub
+		super.onResume();
+		new ShowListTask().execute(f_car_no);
 	}
 
 	private class ShowListTask extends AsyncTask<String, Void, Boolean>
@@ -92,13 +99,23 @@ public class EscapeRecordActivity extends Activity
 			final String parking_name = f_street_name + f_parking_code + "号车位";
 			Intent intent = null;
 
-			System.out.println("escape_state+"+f_escape_state);
-			
+			System.out.println("escape_state+" + f_escape_state);
+
 			if (f_escape_state == 0)
 				intent = new Intent(EscapeRecordActivity.this, EscapePayActivity.class);
 			else
+			{
 				intent = new Intent(EscapeRecordActivity.this, EscapeDetailActivity.class);
 
+				final Double act_pay = (Double) map.get("act_pay");
+				final Timestamp pay_stamp = (Timestamp) map.get("pay_stamp");
+				final String user_name = (String) map.get("user_name");
+
+				intent.putExtra("act_pay", act_pay);
+				intent.putExtra("pay_stamp", pay_stamp.toString());
+				intent.putExtra("user_name", user_name);
+
+			}
 			intent.putExtra("f_id", f_id);
 			intent.putExtra("f_car_no", f_car_no);
 			intent.putExtra("f_leave_stamp", f_leave_stamp.toString());
