@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -16,16 +17,23 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import com.graduation.fragment.parking.ParkingListFragment;
+import com.graduation.fragment.report.DailyReportFragment;
 import com.graduation.util.DialogUtil;
 import com.graduation.util.ViewUtil;
 
@@ -42,6 +50,8 @@ public class MainActivity extends FragmentActivity
 	private CharSequence mDrawerTitle;
 	private CharSequence mTitle;
 	private String[] mPlanetTitles;
+
+	private PopupWindow popupWin;
 
 	@SuppressLint("CommitPrefEdits")
 	@Override
@@ -159,10 +169,13 @@ public class MainActivity extends FragmentActivity
 			finish();
 			break;
 		case R.id.exit:
-			finish();
+			finishDialog();
 			break;
 		case R.id.user_infomation:
 			startActivity(new Intent(MainActivity.this, UserInfoActivity.class));
+			break;
+		case R.id.parking_code:
+			initPopupWin();
 			break;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -184,10 +197,16 @@ public class MainActivity extends FragmentActivity
 		switch (position)
 		{
 		case 0:
-			ParkingListFragment fragment = new ParkingListFragment();
-			getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, fragment)
+			ParkingListFragment fragment0 = new ParkingListFragment();
+			getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, fragment0)
 					.commit();
+			break;
 
+		case 1:
+			DailyReportFragment fragment1 = new DailyReportFragment();
+			getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, fragment1)
+					.commit();
+			break;
 		}
 		mDrawerList.setItemChecked(position, true);
 		setTitle(mPlanetTitles[position]);
@@ -243,26 +262,7 @@ public class MainActivity extends FragmentActivity
 		// 按下键盘上返回按钮
 		if (keyCode == KeyEvent.KEYCODE_BACK)
 		{
-			new AlertDialog.Builder(this).setTitle("")// 设置对话框的标题
-					.setMessage(" 确定退出程序? ")// 设置对话框的内容
-					.setPositiveButton("确定",// 设置对话框的确认按钮
-							new DialogInterface.OnClickListener() {// 设置确认按钮的事件
-								public void onClick(DialogInterface dialog,
-										int which)
-								{
-									// 退出程序
-									android.os.Process.killProcess(android.os.Process
-											.myPid());
-								}
-							}).setNegativeButton("取消",// 设置对话框的取消按钮
-							new DialogInterface.OnClickListener() {// 设置取消按钮的事件
-								public void onClick(DialogInterface dialog,
-										int which)
-								{
-									// 如果你什么操作都不做，可以选择不写入任何代码
-									dialog.cancel();
-								}
-							}).show();
+			finishDialog();
 
 			return true;
 		}
@@ -272,9 +272,94 @@ public class MainActivity extends FragmentActivity
 		}
 	}
 
+	private void finishDialog()
+	{
+		new AlertDialog.Builder(this).setTitle("")// 设置对话框的标题
+				.setMessage(" 确定退出程序? ")// 设置对话框的内容
+				.setPositiveButton("确定",// 设置对话框的确认按钮
+						new DialogInterface.OnClickListener() {// 设置确认按钮的事件
+							public void onClick(DialogInterface dialog,
+									int which)
+							{
+								// 退出程序
+								android.os.Process.killProcess(android.os.Process
+										.myPid());
+							}
+						}).setNegativeButton("取消",// 设置对话框的取消按钮
+						new DialogInterface.OnClickListener() {// 设置取消按钮的事件
+							public void onClick(DialogInterface dialog,
+									int which)
+							{
+								// 如果你什么操作都不做，可以选择不写入任何代码
+								dialog.cancel();
+							}
+						}).show();
+	}
+
 	protected Dialog onCreateDialog(int id)
 	{
 		// TODO Auto-generated method stub
 		return DialogUtil.showDialog(this, id);
 	}
+
+	private void initPopupWin()
+	{
+		View menu = getLayoutInflater().inflate(R.layout.parking_code_set, null);
+		popupWin = new PopupWindow(menu, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		popupWin.setFocusable(true);
+
+		popupWin.setOutsideTouchable(false);
+
+		popupWin.setBackgroundDrawable(new BitmapDrawable());
+		popupWin.showAtLocation(getLayoutInflater().inflate(R.layout.activity_main, null), Gravity.CENTER,
+				0, 0);
+
+		final EditText code_from_edit = (EditText) menu.findViewById(R.id.parking_code_from);
+		final EditText code_to_edit = (EditText) menu.findViewById(R.id.parking_code_to);
+
+		menu.findViewById(R.id.code_ok_button).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v)
+			{
+				// TODO Auto-generated method stub
+				String parking_code_from = code_from_edit.getText().toString();
+				String parking_code_to = code_to_edit.getText().toString();
+
+				if ("".equals(parking_code_from) || "".equals(parking_code_to))
+				{
+					Toast.makeText(MainActivity.this, "请输入完整的车位范围", Toast.LENGTH_LONG)
+							.show();
+				}
+				else if (Integer.parseInt(parking_code_from) > Integer
+						.parseInt(parking_code_to))
+				{
+					Toast.makeText(MainActivity.this, "请按从小到大的顺序输入车位范围",
+							Toast.LENGTH_LONG).show();
+				}
+				else
+				{
+					popupWin.dismiss();
+					editor.putInt("parking_code_from",
+							Integer.parseInt(parking_code_from));
+					editor.putInt("parking_code_to", Integer.parseInt(parking_code_to));
+					editor.commit();
+					System.out.println(parking_code_from + " from + to  "
+							+ parking_code_to);
+					MainActivity.this.onResume();
+				}
+			}
+		});
+		menu.findViewById(R.id.code_cancel_button).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v)
+			{
+				// TODO Auto-generated method stub
+				popupWin.dismiss();
+			}
+		});
+
+	}
+
 }

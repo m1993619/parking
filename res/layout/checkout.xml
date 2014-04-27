@@ -100,17 +100,12 @@
             style="@style/check_row"
             android:layout_marginBottom="16dp" >
 
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/plus" >
-            </ImageButton>
 
             <ImageView
-                android:id="@+id/image"
+                android:id="@+id/car_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone" />
+                 />
         </LinearLayout>
 
         <LinearLayout style="@style/check_row" >

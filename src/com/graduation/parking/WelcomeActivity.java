@@ -1,11 +1,21 @@
 package com.graduation.parking;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Html;
 import android.view.Window;
+import android.widget.TextView;
 
 public class WelcomeActivity extends Activity
 {
@@ -20,10 +30,16 @@ public class WelcomeActivity extends Activity
 		setContentView(R.layout.welcome);
 
 		sp = getSharedPreferences("user", MODE_PRIVATE);
+		
+		
+		
 //		System.out.println(sp.getString("f_name", ""));
 		new Handler().postDelayed(r, 3000);
 
 	}
+	
+	
+	
 
 	Runnable r = new Runnable() {
 		@Override
@@ -39,6 +55,9 @@ public class WelcomeActivity extends Activity
 			startActivity(intent);
 
 			finish();
+		
+//		getConn();
+		
 		}
 	};
 }

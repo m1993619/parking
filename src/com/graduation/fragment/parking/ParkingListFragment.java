@@ -30,8 +30,6 @@ import android.widget.Toast;
 
 import com.graduation.adapter.ParkingListAdapter;
 import com.graduation.fragment.escape.EscapeRecordActivity;
-import com.graduation.fragment.escape.EscapeRecordFragment;
-import com.graduation.parking.MainActivity;
 import com.graduation.parking.R;
 import com.graduation.util.DbUtil;
 import com.graduation.util.DialogUtil;
@@ -45,6 +43,12 @@ public class ParkingListFragment<popupWindow> extends Fragment
 
 	private SharedPreferences sp;
 	private int id;
+	private int street_id;
+	private int parking_code_from;
+	private int parking_code_to;
+	
+	
+	
 	private ParkingListAdapter pla;
 	private PopupWindow popupWindow;
 	private ProgressDialog dialog;
@@ -70,7 +74,11 @@ public class ParkingListFragment<popupWindow> extends Fragment
 
 		sp = getActivity().getSharedPreferences("user", Context.MODE_PRIVATE);
 		id = sp.getInt("f_id", 0);
-
+		street_id = sp.getInt("f_street_id", 0);
+		parking_code_from = sp.getInt("parking_code_from", 0);
+		parking_code_to = sp.getInt("parking_code_to", 0);
+		
+		System.out.println(parking_code_from + " from+to   " + parking_code_to);
 		new getListTask().execute();
 
 	}
@@ -90,7 +98,20 @@ public class ParkingListFragment<popupWindow> extends Fragment
 		protected Boolean doInBackground(Void... params)
 		{
 			// TODO Auto-generated method stub
-			list = DbUtil.getParkingList(id);
+			//根据用户是否设置了责任车位范围，显示相应的车位；
+			String where = "";
+			
+			
+			if(parking_code_from != 0 && parking_code_to != 0)
+			{
+				where = "p.f_street_id = " + street_id + " and to_number(p.f_code,'999') >= " + parking_code_from + " and to_number(p.f_code,'999') <= " + parking_code_to + " order by p.f_id;";
+			}
+			else
+			{
+				where = "p.f_street_id = "+ street_id + " order by p.f_id;";
+			}
+			
+			list = DbUtil.getParkingList(where);
 			return true;
 		}
 
@@ -198,7 +219,7 @@ public class ParkingListFragment<popupWindow> extends Fragment
 	{
 
 		View menu = getLayoutInflater(new Bundle()).inflate(R.layout.menu_has_car, null);
-		popupWindow = new PopupWindow(menu, LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
+		popupWindow = new PopupWindow(menu, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 		popupWindow.setFocusable(true);
 
 		popupWindow.setOutsideTouchable(true);

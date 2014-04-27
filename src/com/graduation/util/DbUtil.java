@@ -15,10 +15,62 @@ import com.gratuation.model.User;
 public class DbUtil
 {
 
-	private static final String URL = "jdbc:postgresql://m1993619.xicp.net:5432/parking";
+	private static final String URL = "jdbc:postgresql://172.16.139.17:5432/parking";
 	private static final String DB_USERNAME = "parking";
 	private static final String DB_PASSWORD = "parking";
 
+	
+	public static HashMap<String,Object> getReport(int id)
+	{
+		HashMap<String,Object> map = new HashMap<String,Object>();
+	
+		String sql = "select" +
+             " (select sum(case when f_leave_stamp is null then 1 else 0 end) as uncost_times  from t_parking_record where f_creater_id = ? and  date(f_parking_stamp) = CURRENT_DATE)," +
+             " (select sum(f_act_cost)  as pre_cost from t_parking_record where f_creater_id = ? and  date(f_parking_stamp) = CURRENT_DATE and f_leave_stamp is null )," +
+             " sum(case when f_cost_type = '正常缴费' then 1 else 0 end) as cost_times," +
+             " round(sum(case when f_cost_type = '正常缴费' then abs(extract(epoch from f_leave_stamp - f_parking_stamp)/60) else 0 end)::numeric,0) || '分钟' as parking_range," +
+             " sum(f_act_cost) as act_cost," +
+             " sum(case when f_cost_type like '%免费%' then 1 else 0 end) as free_times," +
+             " round(sum(case when f_cost_type like '%免费%' then abs(extract(epoch from f_leave_stamp - f_parking_stamp)/60) else 0 end)::numeric,0) || '分钟' as free_range," +
+             " (select sum(f_act_pay) as escape_pay from t_escape_pay_record where date(f_pay_stamp)=CURRENT_DATE and f_user_id =? )" +
+             " from t_parking_record tpr" +
+             " where f_coster_id = ? and date(f_leave_stamp) = CURRENT_DATE";
+		
+		
+		PreparedStatement ps = getPStatement(sql);
+		
+		try
+		{
+			ps.setInt(1, id);
+			ps.setInt(2, id);
+			ps.setInt(3, id);
+			ps.setInt(4, id);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next())
+			{
+				map.put("uncost_times", rs.getInt(1));
+				map.put("pre_cost", rs.getDouble(2));
+				map.put("cost_times", rs.getInt(3));
+				map.put("parking_range", rs.getString(4));
+				map.put("act_cost", rs.getDouble(5));
+				map.put("free_times", rs.getInt(6));
+				map.put("free_range", rs.getString(7));
+				map.put("escape_pay", rs.getDouble(8));
+			}
+			
+		}
+		catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return map;
+	}
+	
+	
 	public static int deleteRecord(String key, int id)
 	{
 		int i = 0;
@@ -265,15 +317,15 @@ public class DbUtil
 		return i;
 	}
 
-	public static ArrayList<HashMap<String, Object>> getParkingList(int id)
+	public static ArrayList<HashMap<String, Object>> getParkingList(String where)
 	{
 		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
-		String sql = "select p.f_id,p.f_code,p.f_name,p.f_street_id,p.f_type,p.f_state,p.f_is_free,p.f_key,rd.f_car_type,rd.f_parking_stamp,rd.f_car_no,s.f_name as f_street_name,rd.f_act_cost,rd.f_car_state, (select count(*) from t_parking_record where f_car_no =rd.f_car_no and f_cost_type='车辆逃逸' and f_escape_state = 0)as f_escape_count from t_parking p left join t_parking_record rd on rd.f_key = p.f_key left join t_street s on p.f_street_id = s.f_id left join t_parking_image tpi on tpi.f_key = rd.f_key left join t_user_parking tup on tup.f_parking_id = p.f_id where tup.f_user_id = ? order by p.f_id";
+		String sql = " select p.f_id,p.f_code,p.f_name,p.f_street_id,p.f_type,p.f_state,p.f_is_free,p.f_key,rd.f_car_type,rd.f_parking_stamp,rd.f_car_no,s.f_name as f_street_name,rd.f_act_cost,rd.f_car_state, (select count(*) from t_parking_record where f_car_no =rd.f_car_no and f_cost_type='车辆逃逸' and f_escape_state = 0)as f_escape_count from t_parking p left join t_parking_record rd on rd.f_key = p.f_key left join t_street s on p.f_street_id = s.f_id left join t_parking_image tpi on tpi.f_key = rd.f_key where ";
+		sql = sql + where;
 		PreparedStatement ps = getPStatement(sql);
 
 		try
 		{
-			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next())
 			{
@@ -377,6 +429,7 @@ public class DbUtil
 		try
 		{
 			conn = DriverManager.getConnection(URL, DB_USERNAME, DB_PASSWORD);
+
 			sta = conn.createStatement();
 			rs = sta.executeQuery(sql);
 		}

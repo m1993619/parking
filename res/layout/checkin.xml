@@ -29,11 +29,13 @@
                 android:text="车辆照片：" />
 
             <ImageButton
+                android:id="@+id/img_plus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/plus" />
 
             <ImageView
+                android:id="@+id/car_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone" />
