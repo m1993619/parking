@@ -15,10 +15,67 @@ import com.gratuation.model.User;
 public class DbUtil
 {
 
-	private static final String URL = "jdbc:postgresql://172.16.139.17:5432/parking";
+	private static final String URL = "jdbc:postgresql://172.16.138.17:5432/parking";
 	private static final String DB_USERNAME = "parking";
 	private static final String DB_PASSWORD = "parking";
 
+	
+	public static ArrayList<HashMap<String,Object>> getParkingRecord(int id)
+	{
+		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
+		
+		String sql = 	"select tpr.*,(case when f_leave_stamp is null then 1 else 0 end) as f_state, s.f_name "
+						+"from  t_parking_record tpr,t_street s "
+						+"where (date(f_parking_stamp) = CURRENT_DATE  or date(f_leave_stamp) = CURRENT_DATE ) "
+						+"and f_street_id in  (select f_street_id from t_user where f_id = ? ) "  
+						+"and tpr.f_street_id = s.f_id";
+		
+		PreparedStatement ps = getPStatement(sql);
+		
+		try
+		{
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next())
+			{
+				HashMap<String, Object> map = new HashMap<String, Object>();
+				map.put("f_id", rs.getInt(1));
+				map.put("f_key", rs.getString(2));
+				map.put("f_car_no", rs.getString(3));
+				map.put("f_car_type", rs.getString(4));
+				map.put("f_leave_stamp", rs.getTimestamp(5));
+				map.put("f_cost", rs.getDouble(6));
+				map.put("f_act_cost", rs.getDouble(7));
+				map.put("f_cost_type", rs.getString(8));
+				map.put("f_reason", rs.getString(9));
+				map.put("f_shift_id", rs.getInt(10));
+				map.put("f_coster_id", rs.getInt(11));
+				map.put("f_creater_id",rs.getInt(12));
+				map.put("f_parking_code", rs.getString(13));
+				map.put("f_parking_stamp", rs.getTimestamp(14));
+				map.put("f_car_state", rs.getString(15));
+				map.put("f_street_id", rs.getInt(16));
+				map.put("f_escape_state", rs.getInt(17));
+				map.put("f_state", rs.getInt(18));
+				map.put("f_street_name", rs.getString(19));
+				
+				list.add(map);
+			}
+			
+		}
+		catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return list;
+	}
+	
+	
+	
+	
 	
 	public static HashMap<String,Object> getReport(int id)
 	{

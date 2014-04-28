@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#eee"
+    android:descendantFocusability="blocksDescendants" >
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+
+            <TextView
+                android:id="@+id/f_car_no"
+                style="@style/parking_has_car_image"
+                android:gravity="center_vertical" />
+
+            <TextView
+                android:id="@+id/f_parking_name"
+                style="@style/parking_has_car_image"
+                android:gravity="center_vertical" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/f_parking_stamp"
+            style="@style/parking_has_car_text" />
+
+        <TextView
+            android:id="@+id/f_leave_stamp"
+            style="@style/parking_has_car_text" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+
+            <TextView
+                android:id="@+id/act_cost"
+                style="@style/parking_has_car_image"
+                android:gravity="center_vertical" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/item_space_gone"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/f_id"
+            style="@style/item_space_gone" />
+
+        <TextView
+            android:id="@+id/f_key"
+            style="@style/item_space_gone" />
+
+        <TextView
+            android:id="@+id/f_street_id"
+            style="@style/item_space_gone" />
+
+        <TextView
+            android:id="@+id/f_car_type"
+            style="@style/item_space_gone" />
+
+        <TextView
+            android:id="@+id/f_cost"
+            style="@style/item_space_gone" />
+
+        <TextView
+            android:id="@+id/f_cost_type"
+            style="@style/item_space_gone" />
+
+        <TextView
+            android:id="@+id/f_reason"
+            style="@style/item_space_gone" />
+
+        <TextView
+            android:id="@+id/f_shift_id"
+            style="@style/item_space_gone" />
+
+        <TextView
+            android:id="@+id/f_coster_id"
+            style="@style/item_space_gone" />
+
+        <TextView
+            android:id="@+id/f_creater_id"
+            style="@style/item_space_gone" />
+
+        <TextView
+            android:id="@+id/f_parking_code"
+            style="@style/item_space_gone" />
+
+        <TextView
+            android:id="@+id/f_car_state"
+            style="@style/item_space_gone" />
+
+        <TextView
+            android:id="@+id/f_state"
+            style="@style/item_space_gone" />
+    </LinearLayout>
+
+</LinearLayout>

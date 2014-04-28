@@ -68,7 +68,7 @@ public final class R {
     public static final class id {
         public static final int act_cost=0x7f0a000a;
         public static final int act_pay=0x7f0a0026;
-        public static final int action_forgot_password=0x7f0a005c;
+        public static final int action_forgot_password=0x7f0a0065;
         public static final int car_img=0x7f0a0005;
         public static final int car_no=0x7f0a0008;
         public static final int car_state=0x7f0a000c;
@@ -86,7 +86,7 @@ public final class R {
         public static final int creater=0x7f0a0024;
         public static final int date=0x7f0a0017;
         public static final int delete=0x7f0a003b;
-        public static final int delete_record=0x7f0a005b;
+        public static final int delete_record=0x7f0a0064;
         public static final int delete_view=0x7f0a003a;
         public static final int drawer_layout=0x7f0a0000;
         public static final int edit=0x7f0a0039;
@@ -94,14 +94,18 @@ public final class R {
         public static final int escape=0x7f0a003f;
         public static final int escape_pay=0x7f0a0020;
         public static final int escapelist=0x7f0a0033;
-        public static final int exit=0x7f0a005f;
-        public static final int f_account=0x7f0a0054;
+        public static final int exit=0x7f0a0068;
+        public static final int f_account=0x7f0a005d;
         public static final int f_act_cost=0x7f0a002c;
         public static final int f_car_no=0x7f0a0042;
         public static final int f_car_state=0x7f0a002d;
         public static final int f_car_type=0x7f0a002a;
         public static final int f_code=0x7f0a0045;
+        public static final int f_cost=0x7f0a0055;
+        public static final int f_cost_type=0x7f0a0056;
+        public static final int f_coster_id=0x7f0a0059;
         public static final int f_coster_name=0x7f0a002f;
+        public static final int f_creater_id=0x7f0a005a;
         public static final int f_creater_name=0x7f0a0030;
         public static final int f_escape=0x7f0a0044;
         public static final int f_escape_state=0x7f0a002e;
@@ -110,10 +114,14 @@ public final class R {
         public static final int f_key=0x7f0a004a;
         public static final int f_leave_stamp=0x7f0a002b;
         public static final int f_name=0x7f0a0041;
+        public static final int f_parking_code=0x7f0a005b;
+        public static final int f_parking_name=0x7f0a0054;
         public static final int f_parking_stamp=0x7f0a0043;
-        public static final int f_password=0x7f0a0055;
-        public static final int f_phone=0x7f0a0056;
-        public static final int f_shift_name=0x7f0a0057;
+        public static final int f_password=0x7f0a005e;
+        public static final int f_phone=0x7f0a005f;
+        public static final int f_reason=0x7f0a0057;
+        public static final int f_shift_id=0x7f0a0058;
+        public static final int f_shift_name=0x7f0a0060;
         public static final int f_state=0x7f0a0048;
         public static final int f_street_id=0x7f0a0046;
         public static final int f_street_name=0x7f0a004b;
@@ -122,13 +130,13 @@ public final class R {
         public static final int free_range=0x7f0a001e;
         public static final int free_times=0x7f0a001d;
         public static final int has_car=0x7f0a0040;
-        public static final int imageView1=0x7f0a005a;
-        public static final int imageView2=0x7f0a0059;
+        public static final int imageView1=0x7f0a0063;
+        public static final int imageView2=0x7f0a0062;
         public static final int img_plus=0x7f0a0004;
         public static final int leave_stamp=0x7f0a0022;
         public static final int left_drawer=0x7f0a0002;
         public static final int login_button=0x7f0a0037;
-        public static final int logout=0x7f0a005d;
+        public static final int logout=0x7f0a0066;
         public static final int parking_code=0x7f0a0009;
         public static final int parking_code_from=0x7f0a004d;
         public static final int parking_code_to=0x7f0a004f;
@@ -148,6 +156,7 @@ public final class R {
         public static final int province=0x7f0a0006;
         public static final int reason=0x7f0a0015;
         public static final int reason_view=0x7f0a0014;
+        public static final int record_list=0x7f0a005c;
         public static final int save=0x7f0a000d;
         public static final int search=0x7f0a0052;
         public static final int search_escape_view=0x7f0a003e;
@@ -158,9 +167,9 @@ public final class R {
         public static final int title=0x7f0a0032;
         public static final int title1=0x7f0a004c;
         public static final int uncost_times=0x7f0a001c;
-        public static final int up_user_info=0x7f0a0058;
-        public static final int user_info_edit=0x7f0a0060;
-        public static final int user_infomation=0x7f0a005e;
+        public static final int up_user_info=0x7f0a0061;
+        public static final int user_info_edit=0x7f0a0069;
+        public static final int user_infomation=0x7f0a0067;
         public static final int user_name=0x7f0a0018;
         public static final int username=0x7f0a0035;
     }
@@ -182,8 +191,11 @@ public final class R {
         public static final int parking_code_set=0x7f03000e;
         public static final int parking_list=0x7f03000f;
         public static final int parking_no_car=0x7f030010;
-        public static final int user_info=0x7f030011;
-        public static final int welcome=0x7f030012;
+        public static final int record_leave_item=0x7f030011;
+        public static final int record_list=0x7f030012;
+        public static final int record_parking_item=0x7f030013;
+        public static final int user_info=0x7f030014;
+        public static final int welcome=0x7f030015;
     }
     public static final class menu {
         public static final int checkin_edit=0x7f090000;

@@ -33,6 +33,7 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.graduation.fragment.parking.ParkingListFragment;
+import com.graduation.fragment.record.ParkingRecordListFragment;
 import com.graduation.fragment.report.DailyReportFragment;
 import com.graduation.util.DialogUtil;
 import com.graduation.util.ViewUtil;
@@ -205,6 +206,12 @@ public class MainActivity extends FragmentActivity
 		case 1:
 			DailyReportFragment fragment1 = new DailyReportFragment();
 			getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, fragment1)
+					.commit();
+			break;
+
+		case 2:
+			ParkingRecordListFragment fragment2 = new ParkingRecordListFragment();
+			getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, fragment2)
 					.commit();
 			break;
 		}
